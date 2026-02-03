@@ -67,48 +67,41 @@ function VisualizationSection({
   );
 }
 
-// Animated counter hook
-function useAnimatedCounter(end: number, duration: number = 2000, startOnView: boolean = true) {
+// Optimized animated counter hook with reduced duration
+function useAnimatedCounter(end: number, duration: number = 1000) {
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!startOnView) {
-      animateCount();
-      return;
-    }
+    const element = ref.current;
+    if (!element) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated) {
           setHasAnimated(true);
-          animateCount();
+          observer.disconnect();
+          
+          const startTime = performance.now();
+          const animate = (currentTime: number) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 2); // easeOutQuad (faster)
+            setCount(Math.floor(eased * end));
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+          requestAnimationFrame(animate);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
+    observer.observe(element);
     return () => observer.disconnect();
-  }, [end, hasAnimated, startOnView]);
-
-  function animateCount() {
-    const startTime = Date.now();
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-      setCount(Math.floor(eased * end));
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-    animate();
-  }
+  }, [end, duration, hasAnimated]);
 
   return { count, ref };
 }
