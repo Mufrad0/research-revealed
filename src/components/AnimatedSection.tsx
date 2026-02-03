@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ReactNode, memo } from "react";
+import { ReactNode } from "react";
 
 interface AnimatedSectionProps {
   children: ReactNode;
@@ -7,8 +7,7 @@ interface AnimatedSectionProps {
   delay?: number;
 }
 
-// Memoized to prevent unnecessary re-renders
-export const AnimatedSection = memo(function AnimatedSection({ 
+export function AnimatedSection({ 
   children, 
   className = "", 
   delay = 0 
@@ -24,9 +23,9 @@ export const AnimatedSection = memo(function AnimatedSection({
       {children}
     </motion.div>
   );
-});
+}
 
-export const AnimatedCard = memo(function AnimatedCard({ 
+export function AnimatedCard({ 
   children, 
   className = "", 
   delay = 0 
@@ -42,9 +41,9 @@ export const AnimatedCard = memo(function AnimatedCard({
       {children}
     </motion.div>
   );
-});
+}
 
-export const StaggerContainer = memo(function StaggerContainer({ 
+export function StaggerContainer({ 
   children, 
   className = "" 
 }: { children: ReactNode; className?: string }) {
@@ -66,9 +65,9 @@ export const StaggerContainer = memo(function StaggerContainer({
       {children}
     </motion.div>
   );
-});
+}
 
-export const StaggerItem = memo(function StaggerItem({ 
+export function StaggerItem({ 
   children, 
   className = "" 
 }: { children: ReactNode; className?: string }) {
@@ -83,4 +82,4 @@ export const StaggerItem = memo(function StaggerItem({
       {children}
     </motion.div>
   );
-});
+}

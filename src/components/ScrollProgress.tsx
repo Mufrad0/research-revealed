@@ -1,7 +1,6 @@
 import { motion, useScroll, useSpring } from "framer-motion";
-import { memo } from "react";
 
-export const ScrollProgress = memo(function ScrollProgress() {
+export function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 200,
@@ -15,4 +14,4 @@ export const ScrollProgress = memo(function ScrollProgress() {
       style={{ scaleX, willChange: "transform" }}
     />
   );
-});
+}
