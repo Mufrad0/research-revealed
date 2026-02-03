@@ -115,10 +115,10 @@ function StatCard({ value, label, icon: Icon }: { value: number; label: string; 
   const { count, ref } = useAnimatedCounter(value);
   
   return (
-    <Card className="border-none shadow-lg bg-card hover-lift cursor-default group">
+    <Card className="border shadow-sm bg-card hover-lift cursor-default">
       <CardContent className="p-6 flex items-center gap-4" ref={ref}>
-        <div className="p-3 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 group-hover:from-primary/30 group-hover:to-accent/30 transition-colors">
-          <Icon className="h-6 w-6 text-primary group-hover:scale-110 transition-transform" />
+        <div className="p-3 rounded-full bg-accent/10">
+          <Icon className="h-6 w-6 text-accent" />
         </div>
         <div>
           <p className="text-2xl font-bold text-foreground stat-counter">{count}</p>
@@ -133,34 +133,28 @@ const Index = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 bg-gradient-to-br from-secondary via-background to-secondary/50 overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
-        
-        <div className="container relative">
+      <section className="relative py-20 lg:py-32 bg-secondary/50">
+        <div className="container">
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-sm font-medium text-accent uppercase tracking-wider mb-4 animate-fade-in">
-              DS105A Research Project
+            <p className="text-sm font-medium text-accent uppercase tracking-wider mb-4">
+              DS105A Research Project • Pandas Express 🐼
             </p>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight animate-fade-in" style={{ animationDelay: '0.1s' }}>
-              How are dimensions of democracy associated with{' '}
-              <span className="gradient-text">beneficial vs harmful</span>{' '}
-              social media practices?
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              How are dimensions of democracy associated with beneficial vs harmful social media practices?
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
               Exploring the relationship between democratic institutions and digital society 
               practices across 179 countries using V-Dem and Digital Society Project data.
             </p>
-            <div className="flex flex-wrap justify-center gap-4 mb-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
               <Link to="/methodology">
-                <Button size="lg" className="group bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl transition-all">
+                <Button size="lg" className="group">
                   Explore Research
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link to="/team">
-                <Button size="lg" variant="outline" className="hover-lift">
+                <Button size="lg" variant="outline">
                   Meet the Team
                 </Button>
               </Link>
@@ -185,7 +179,7 @@ const Index = () => {
         and negative phenomena (disinformation, polarization) are increasing simultaneously."
         linkTo="/global-trends"
       >
-        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card hover-lift">
+        <div className="rounded-xl overflow-hidden shadow-lg border bg-card hover-lift">
           <img 
             src={internetTimeSeries} 
             alt="Internet Time Series showing global trends from 2000-2024" 
@@ -210,12 +204,12 @@ const Index = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-4 flex flex-col group">
+            <div className="space-y-4 flex flex-col">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-beneficial animate-pulse" />
+                <div className="w-3 h-3 rounded-full bg-beneficial" />
                 <h3 className="font-semibold text-lg">Beneficial Practices</h3>
               </div>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card flex-1 hover-lift">
+              <div className="rounded-xl overflow-hidden shadow-lg border bg-card flex-1 hover-lift">
                 <img 
                   src={correlationBeneficial} 
                   alt="Correlation heatmap for beneficial social media practices" 
@@ -223,12 +217,12 @@ const Index = () => {
                 />
               </div>
             </div>
-            <div className="space-y-4 flex flex-col group">
+            <div className="space-y-4 flex flex-col">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-harmful animate-pulse" />
+                <div className="w-3 h-3 rounded-full bg-harmful" />
                 <h3 className="font-semibold text-lg">Harmful Practices</h3>
               </div>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card flex-1 hover-lift">
+              <div className="rounded-xl overflow-hidden shadow-lg border bg-card flex-1 hover-lift">
                 <img 
                   src={correlationHarmful} 
                   alt="Correlation heatmap for harmful social media practices" 
@@ -348,24 +342,21 @@ const Index = () => {
               { 
                 title: "Methodology", 
                 description: "Learn about our data sources, variables, and analytical approach",
-                href: "/methodology",
-                color: "from-primary/10 to-primary/5"
+                href: "/methodology"
               },
               { 
                 title: "Global Trends", 
                 description: "See how digital practices have evolved worldwide since 2000",
-                href: "/global-trends",
-                color: "from-accent/10 to-accent/5"
+                href: "/global-trends"
               },
               { 
                 title: "Meet the Team", 
                 description: "Get to know the researchers behind this project",
-                href: "/team",
-                color: "from-beneficial/10 to-beneficial/5"
+                href: "/team"
               },
             ].map((card) => (
               <Link key={card.href} to={card.href}>
-                <Card className={`h-full hover-lift border-2 hover:border-accent/50 bg-gradient-to-br ${card.color}`}>
+                <Card className="h-full hover-lift border hover:border-accent/50">
                   <CardContent className="p-6">
                     <h3 className="font-serif text-xl font-bold mb-2">{card.title}</h3>
                     <p className="text-muted-foreground mb-4">{card.description}</p>

@@ -2,61 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Modern Data Journalism Palette */
+/* Clean Academic Theme - Pandas Express */
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --background: 45 30% 97%;
-    --foreground: 220 30% 12%;
+    --background: 0 0% 99%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 30% 12%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 30% 12%;
+    --popover-foreground: 222 47% 11%;
 
-    /* Rich indigo - primary brand color */
-    --primary: 235 65% 50%;
+    /* Deep slate blue - primary */
+    --primary: 222 47% 20%;
     --primary-foreground: 0 0% 100%;
 
-    /* Warm cream for secondary elements */
-    --secondary: 45 25% 92%;
-    --secondary-foreground: 220 30% 15%;
+    /* Light gray for secondary */
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 15%;
 
-    --muted: 45 20% 94%;
-    --muted-foreground: 220 15% 45%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    /* Vibrant coral accent */
-    --accent: 12 90% 60%;
+    /* Teal accent - professional and distinctive */
+    --accent: 173 58% 39%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 75% 55%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 45 15% 85%;
-    --input: 45 15% 85%;
-    --ring: 235 65% 50%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 222 47% 20%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    /* Vibrant data visualization palette */
-    --chart-blue: 220 85% 55%;
-    --chart-orange: 25 95% 55%;
-    --chart-green: 155 70% 40%;
-    --chart-magenta: 330 75% 55%;
-    --chart-cyan: 185 75% 45%;
-    --chart-yellow: 42 95% 55%;
-    --chart-purple: 265 65% 55%;
+    /* Data visualization - muted professional palette */
+    --chart-blue: 217 71% 53%;
+    --chart-orange: 25 95% 53%;
+    --chart-green: 152 69% 31%;
+    --chart-magenta: 322 65% 55%;
+    --chart-cyan: 189 94% 43%;
+    --chart-yellow: 45 93% 47%;
+    --chart-purple: 262 52% 47%;
 
-    /* Semantic colors for research context */
-    --beneficial: 155 70% 40%;
-    --harmful: 350 80% 55%;
-    --neutral: 220 85% 55%;
-
-    /* Gradient colors */
-    --gradient-start: 235 65% 50%;
-    --gradient-end: 12 90% 60%;
+    /* Semantic colors */
+    --beneficial: 152 69% 31%;
+    --harmful: 0 84% 60%;
+    --neutral: 217 71% 53%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -65,46 +61,46 @@
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 235 65% 50%;
+    --sidebar-ring: 222 47% 20%;
   }
 
   .dark {
-    --background: 225 25% 8%;
-    --foreground: 45 20% 95%;
+    --background: 222 47% 8%;
+    --foreground: 210 20% 98%;
 
-    --card: 225 25% 12%;
-    --card-foreground: 45 20% 95%;
+    --card: 222 47% 11%;
+    --card-foreground: 210 20% 98%;
 
-    --popover: 225 25% 12%;
-    --popover-foreground: 45 20% 95%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 20% 98%;
 
-    --primary: 235 75% 65%;
-    --primary-foreground: 225 25% 8%;
+    --primary: 173 58% 50%;
+    --primary-foreground: 222 47% 8%;
 
-    --secondary: 225 20% 18%;
-    --secondary-foreground: 45 20% 95%;
+    --secondary: 222 30% 18%;
+    --secondary-foreground: 210 20% 98%;
 
-    --muted: 225 20% 16%;
-    --muted-foreground: 45 15% 60%;
+    --muted: 222 30% 15%;
+    --muted-foreground: 215 20% 55%;
 
-    --accent: 12 85% 60%;
-    --accent-foreground: 225 25% 8%;
+    --accent: 173 58% 45%;
+    --accent-foreground: 222 47% 8%;
 
-    --destructive: 0 65% 50%;
+    --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 225 20% 20%;
-    --input: 225 20% 20%;
-    --ring: 235 75% 65%;
+    --border: 222 30% 20%;
+    --input: 222 30% 20%;
+    --ring: 173 58% 50%;
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary: 173 58% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 235 75% 65%;
+    --sidebar-ring: 173 58% 50%;
   }
 }
 
@@ -131,53 +127,12 @@
   }
   
   .hover-lift:hover {
-    @apply -translate-y-2 shadow-xl;
-  }
-
-  /* Gradient text effect */
-  .gradient-text {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-  }
-
-  /* Animated underline for links */
-  .animated-underline {
-    @apply relative;
-  }
-  
-  .animated-underline::after {
-    content: '';
-    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300;
-  }
-  
-  .animated-underline:hover::after {
-    @apply w-full;
-  }
-
-  /* Pulse animation for interactive elements */
-  .pulse-dot {
-    @apply relative;
-  }
-  
-  .pulse-dot::before {
-    content: '';
-    @apply absolute inset-0 rounded-full bg-current opacity-40 animate-ping;
+    @apply -translate-y-1 shadow-lg;
   }
 
   /* Stat card with counter animation */
   .stat-counter {
     @apply tabular-nums;
-  }
-
-  /* Section reveal animation */
-  .reveal-section {
-    @apply opacity-0 translate-y-8;
-    animation: reveal 0.8s ease-out forwards;
-  }
-
-  /* Floating animation */
-  .float {
-    animation: float 6s ease-in-out infinite;
   }
 }
 
@@ -188,7 +143,7 @@ html {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -196,47 +151,9 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-primary/30 rounded-full transition-colors;
+  @apply bg-muted-foreground/30 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-primary/50;
-}
-
-/* Keyframe animations */
-@keyframes reveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-/* Shimmer effect for loading states */
-.shimmer {
-  background: linear-gradient(
-    90deg,
-    hsl(var(--muted)) 0%,
-    hsl(var(--secondary)) 50%,
-    hsl(var(--muted)) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  @apply bg-muted-foreground/50;
 }

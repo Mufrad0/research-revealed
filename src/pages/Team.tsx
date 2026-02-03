@@ -37,14 +37,14 @@ export default function Team() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="py-16 lg:py-24 bg-gradient-to-b from-secondary/50 to-background">
+      <section className="py-16 lg:py-24 bg-secondary/50">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-sm font-medium text-accent uppercase tracking-wider mb-4">
               DS105A Research Team
             </p>
-            <h1 className="font-serif text-4xl lg:text-5xl font-bold mb-6">
-              Meet the Team
+            <h1 className="font-serif text-4xl lg:text-5xl font-bold mb-4">
+              Pandas Express 🐼
             </h1>
             <p className="text-xl text-muted-foreground">
               We are a team of four researchers exploring the intersection of democracy 
