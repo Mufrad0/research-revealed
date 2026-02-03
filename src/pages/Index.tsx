@@ -213,53 +213,44 @@ const Index = () => {
         </div>
       </VisualizationSection>
 
-      {/* Expert Uncertainty Section */}
-      <section id="expert-uncertainty" className="py-16 lg:py-24 bg-secondary/30">
-        <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <p className="text-sm font-medium text-accent uppercase tracking-wider mb-2">
-              Data Reliability
-            </p>
-            <h2 className="font-serif text-3xl lg:text-4xl font-bold mb-4">
-              Understanding expert disagreement in the data
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              V-Dem data is coded by expert surveys, which means some measurements carry more uncertainty 
-              than others. Analyzing expert disagreement helps us understand where our findings are most robust.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8 items-stretch">
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Expert Disagreement Over Time</h3>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
-                <img 
-                  src={expertDisagreement} 
-                  alt="Expert disagreement trends for internet-related variables" 
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Top 15 Countries with Highest Uncertainty</h3>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
-                <img 
-                  src={topUncertain} 
-                  alt="Top 15 countries with highest expert uncertainty" 
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="text-center mt-8">
-            <Link to="/expert-uncertainty">
-              <Button variant="outline" className="group">
-                Explore Data Reliability
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-          </div>
+      {/* Expert Disagreement Over Time Section */}
+      <VisualizationSection
+        id="expert-disagreement"
+        subtitle="Data Reliability"
+        title="Expert disagreement has risen sharply since 2020"
+        insight="V-Dem data is coded by expert surveys, which means some measurements carry more uncertainty 
+        than others. Analyzing expert disagreement helps us understand where our findings are most robust."
+        linkTo="/expert-uncertainty"
+        linkLabel="Explore Data Reliability"
+      >
+        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
+          <img 
+            src={expertDisagreement} 
+            alt="Expert disagreement trends for internet-related variables" 
+            className="w-full h-auto"
+          />
         </div>
-      </section>
+      </VisualizationSection>
+
+      {/* Top 15 Uncertain Countries Section */}
+      <VisualizationSection
+        id="uncertain-countries"
+        subtitle="Measurement Uncertainty"
+        title="Small democracies and closed autocracies show highest uncertainty"
+        insight="On average, experts disagree most on internet measures in countries where data collection 
+        is challenging—either due to limited access in authoritarian regimes or smaller expert pools in stable democracies."
+        linkTo="/expert-uncertainty"
+        linkLabel="View Full Analysis"
+        reverse
+      >
+        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
+          <img 
+            src={topUncertain} 
+            alt="Top 15 countries with highest expert uncertainty" 
+            className="w-full h-auto"
+          />
+        </div>
+      </VisualizationSection>
 
       {/* Interactive Radar Chart Section */}
       <section id="radar-comparison" className="py-16 lg:py-24">
