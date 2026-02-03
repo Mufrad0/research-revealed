@@ -11,7 +11,7 @@ export default function Correlation() {
         <div className="container">
           <div className="max-w-3xl">
             <p className="text-sm font-medium text-accent uppercase tracking-wider mb-4">
-              Sam's Analysis
+              Statistical Analysis
             </p>
             <h1 className="font-serif text-4xl lg:text-5xl font-bold mb-6">
               Correlation Analysis

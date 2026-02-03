@@ -28,13 +28,13 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-0.5">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               to={link.href}
               className={cn(
-                "px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                "px-2 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap",
                 location.pathname === link.href
                   ? "bg-primary text-primary-foreground"
                   : "text-muted-foreground hover:text-foreground hover:bg-secondary"
@@ -49,7 +49,7 @@ export function Header() {
         <Button
           variant="ghost"
           size="icon"
-          className="lg:hidden"
+          className="md:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -58,7 +58,7 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <nav className="lg:hidden border-t bg-background">
+        <nav className="md:hidden border-t bg-background">
           <div className="container py-4 flex flex-col gap-2">
             {navLinks.map((link) => (
               <Link
