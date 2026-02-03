@@ -4,6 +4,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { RadarChartComparison } from "@/components/RadarChartComparison";
+import { useEffect, useState, useRef } from "react";
 
 // Import visualization images
 import internetTimeSeries from "@/assets/Internet-Time-Series.png";
@@ -64,15 +65,63 @@ function VisualizationSection({
   );
 }
 
-function StatCard({ value, label, icon: Icon }: { value: string; label: string; icon: React.ElementType }) {
+// Animated counter hook
+function useAnimatedCounter(end: number, duration: number = 2000, startOnView: boolean = true) {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!startOnView) {
+      animateCount();
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          animateCount();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [end, hasAnimated, startOnView]);
+
+  function animateCount() {
+    const startTime = Date.now();
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      setCount(Math.floor(eased * end));
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    animate();
+  }
+
+  return { count, ref };
+}
+
+function StatCard({ value, label, icon: Icon }: { value: number; label: string; icon: React.ElementType }) {
+  const { count, ref } = useAnimatedCounter(value);
+  
   return (
-    <Card className="border-none shadow-lg bg-card">
-      <CardContent className="p-6 flex items-center gap-4">
-        <div className="p-3 rounded-full bg-accent/10">
-          <Icon className="h-6 w-6 text-accent" />
+    <Card className="border-none shadow-lg bg-card hover-lift cursor-default group">
+      <CardContent className="p-6 flex items-center gap-4" ref={ref}>
+        <div className="p-3 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 group-hover:from-primary/30 group-hover:to-accent/30 transition-colors">
+          <Icon className="h-6 w-6 text-primary group-hover:scale-110 transition-transform" />
         </div>
         <div>
-          <p className="text-2xl font-bold text-foreground">{value}</p>
+          <p className="text-2xl font-bold text-foreground stat-counter">{count}</p>
           <p className="text-sm text-muted-foreground">{label}</p>
         </div>
       </CardContent>
@@ -84,37 +133,43 @@ const Index = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 bg-gradient-to-b from-secondary/50 to-background">
-        <div className="container">
+      <section className="relative py-20 lg:py-32 bg-gradient-to-br from-secondary via-background to-secondary/50 overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+        
+        <div className="container relative">
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-sm font-medium text-accent uppercase tracking-wider mb-4">
+            <p className="text-sm font-medium text-accent uppercase tracking-wider mb-4 animate-fade-in">
               DS105A Research Project
             </p>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              How are dimensions of democracy associated with beneficial vs harmful social media practices?
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              How are dimensions of democracy associated with{' '}
+              <span className="gradient-text">beneficial vs harmful</span>{' '}
+              social media practices?
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
               Exploring the relationship between democratic institutions and digital society 
               practices across 179 countries using V-Dem and Digital Society Project data.
             </p>
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
+            <div className="flex flex-wrap justify-center gap-4 mb-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <Link to="/methodology">
-                <Button size="lg" className="group">
+                <Button size="lg" className="group bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary shadow-lg hover:shadow-xl transition-all">
                   Explore Research
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link to="/team">
-                <Button size="lg" variant="outline">
+                <Button size="lg" variant="outline" className="hover-lift">
                   Meet the Team
                 </Button>
               </Link>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-              <StatCard value="179" label="Countries Analyzed" icon={Globe} />
-              <StatCard value="24" label="Years of Data" icon={TrendingUp} />
-              <StatCard value="7" label="DSP Variables" icon={BarChart3} />
-              <StatCard value="5" label="Democracy Indices" icon={AlertTriangle} />
+              <StatCard value={179} label="Countries Analyzed" icon={Globe} />
+              <StatCard value={24} label="Years of Data" icon={TrendingUp} />
+              <StatCard value={7} label="DSP Variables" icon={BarChart3} />
+              <StatCard value={5} label="Democracy Indices" icon={AlertTriangle} />
             </div>
           </div>
         </div>
@@ -130,7 +185,7 @@ const Index = () => {
         and negative phenomena (disinformation, polarization) are increasing simultaneously."
         linkTo="/global-trends"
       >
-        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
+        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card hover-lift">
           <img 
             src={internetTimeSeries} 
             alt="Internet Time Series showing global trends from 2000-2024" 
@@ -155,12 +210,12 @@ const Index = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-4 flex flex-col">
+            <div className="space-y-4 flex flex-col group">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-beneficial" />
+                <div className="w-3 h-3 rounded-full bg-beneficial animate-pulse" />
                 <h3 className="font-semibold text-lg">Beneficial Practices</h3>
               </div>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card flex-1">
+              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card flex-1 hover-lift">
                 <img 
                   src={correlationBeneficial} 
                   alt="Correlation heatmap for beneficial social media practices" 
@@ -168,12 +223,12 @@ const Index = () => {
                 />
               </div>
             </div>
-            <div className="space-y-4 flex flex-col">
+            <div className="space-y-4 flex flex-col group">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-harmful" />
+                <div className="w-3 h-3 rounded-full bg-harmful animate-pulse" />
                 <h3 className="font-semibold text-lg">Harmful Practices</h3>
               </div>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card flex-1">
+              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card flex-1 hover-lift">
                 <img 
                   src={correlationHarmful} 
                   alt="Correlation heatmap for harmful social media practices" 
@@ -204,7 +259,7 @@ const Index = () => {
         linkTo="/country-comparison"
         reverse
       >
-        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
+        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card hover-lift">
           <img 
             src={ddiVenezuelaUS} 
             alt="DDI comparison between Venezuela and USA over time" 
@@ -223,7 +278,7 @@ const Index = () => {
         linkTo="/expert-uncertainty"
         linkLabel="Explore Data Reliability"
       >
-        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
+        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card hover-lift">
           <img 
             src={expertDisagreement} 
             alt="Expert disagreement trends for internet-related variables" 
@@ -243,7 +298,7 @@ const Index = () => {
         linkLabel="View Full Analysis"
         reverse
       >
-        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
+        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card hover-lift">
           <img 
             src={topUncertain} 
             alt="Top 15 countries with highest expert uncertainty" 
@@ -293,26 +348,29 @@ const Index = () => {
               { 
                 title: "Methodology", 
                 description: "Learn about our data sources, variables, and analytical approach",
-                href: "/methodology"
+                href: "/methodology",
+                color: "from-primary/10 to-primary/5"
               },
               { 
                 title: "Global Trends", 
                 description: "See how digital practices have evolved worldwide since 2000",
-                href: "/global-trends"
+                href: "/global-trends",
+                color: "from-accent/10 to-accent/5"
               },
               { 
                 title: "Meet the Team", 
                 description: "Get to know the researchers behind this project",
-                href: "/team"
+                href: "/team",
+                color: "from-beneficial/10 to-beneficial/5"
               },
             ].map((card) => (
               <Link key={card.href} to={card.href}>
-                <Card className="h-full hover:shadow-lg transition-shadow border-2 hover:border-accent/50">
+                <Card className={`h-full hover-lift border-2 hover:border-accent/50 bg-gradient-to-br ${card.color}`}>
                   <CardContent className="p-6">
                     <h3 className="font-serif text-xl font-bold mb-2">{card.title}</h3>
                     <p className="text-muted-foreground mb-4">{card.description}</p>
-                    <span className="text-accent font-medium inline-flex items-center">
-                      Learn more <ArrowRight className="ml-1 h-4 w-4" />
+                    <span className="text-accent font-medium inline-flex items-center group">
+                      Learn more <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </span>
                   </CardContent>
                 </Card>
