@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   RadarChart,
   PolarGrid,
@@ -10,44 +10,27 @@ import {
   Tooltip,
 } from "recharts";
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ChevronDown, Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
 import {
   DSP_VARIABLES,
-  MIN_MAX,
   normalizeValue,
-  getCountries,
-  getYearsForCountry,
-  getCountryData,
-  getAllEDIValues,
   type DSPVariableKey,
 } from "@/data/radarChartData";
+import { loadDspDataset, type DspDataset } from "@/data/dspDataset";
+import { CountryCombobox } from "@/components/radar/CountryCombobox";
+import { DspRadarTooltip } from "@/components/radar/DspRadarTooltip";
 
 const VARIABLE_KEYS = Object.keys(DSP_VARIABLES) as DSPVariableKey[];
 
@@ -64,110 +47,126 @@ function calculatePercentile(ediValue: number, allEDIValues: number[]): number {
   return (count / allEDIValues.length) * 100;
 }
 
-interface CountryComboboxProps {
-  value: string;
-  onValueChange: (value: string) => void;
-  countries: string[];
-  label: string;
-}
-
-function CountryCombobox({ value, onValueChange, countries, label }: CountryComboboxProps) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-full justify-between"
-        >
-          <span className="truncate">{value || `Select ${label}`}</span>
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0" align="start">
-        <Command>
-          <CommandInput placeholder={`Search ${label.toLowerCase()}...`} />
-          <CommandList>
-            <CommandEmpty>No country found.</CommandEmpty>
-            <CommandGroup>
-              {countries.map((country) => (
-                <CommandItem
-                  key={country}
-                  value={country}
-                  onSelect={() => {
-                    onValueChange(country);
-                    setOpen(false);
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === country ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  {country}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  );
-}
-
 export function RadarChartComparison() {
-  const countries = useMemo(() => getCountries(), []);
-  
-  const [country1, setCountry1] = useState("United States of America");
-  const [country2, setCountry2] = useState("Venezuela");
-  
-  const years1 = useMemo(() => getYearsForCountry(country1), [country1]);
-  const years2 = useMemo(() => getYearsForCountry(country2), [country2]);
-  
-  const [year1, setYear1] = useState(years1[0] || 2023);
-  const [year2, setYear2] = useState(years2[0] || 2023);
+  const [dataset, setDataset] = useState<DspDataset | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    loadDspDataset()
+      .then((d) => {
+        if (!alive) return;
+        setDataset(d);
+      })
+      .catch((e) => {
+        if (!alive) return;
+        setLoadError(e instanceof Error ? e.message : String(e));
+      });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const countries = dataset?.countries ?? [];
+
+  const [country1, setCountry1] = useState("");
+  const [country2, setCountry2] = useState("");
+  const [year1, setYear1] = useState<number | null>(null);
+  const [year2, setYear2] = useState<number | null>(null);
+
+  // Set defaults once dataset is loaded (match Streamlit intent: sensible defaults + most recent year)
+  useEffect(() => {
+    if (!dataset) return;
+
+    const defaultC1 =
+      dataset.countries.includes("United States of America")
+        ? "United States of America"
+        : dataset.countries[0] ?? "";
+    const defaultC2 =
+      dataset.countries.includes("Bangladesh")
+        ? "Bangladesh"
+        : dataset.countries[1] ?? dataset.countries[0] ?? "";
+
+    setCountry1((prev) => prev || defaultC1);
+    setCountry2((prev) => prev || defaultC2);
+  }, [dataset]);
+
+  const years1 = useMemo(() => {
+    if (!dataset || !country1) return [];
+    return dataset.yearsByCountry[country1] ?? [];
+  }, [dataset, country1]);
+
+  const years2 = useMemo(() => {
+    if (!dataset || !country2) return [];
+    return dataset.yearsByCountry[country2] ?? [];
+  }, [dataset, country2]);
+
+  // Default to most recent year (Streamlit uses index=len-1 on ascending years)
+  useEffect(() => {
+    if (!years1.length) return;
+    const mostRecent = years1[years1.length - 1];
+    setYear1((prev) => (prev && years1.includes(prev) ? prev : mostRecent));
+  }, [years1]);
+
+  useEffect(() => {
+    if (!years2.length) return;
+    const mostRecent = years2[years2.length - 1];
+    setYear2((prev) => (prev && years2.includes(prev) ? prev : mostRecent));
+  }, [years2]);
 
   // Update year when country changes
   const handleCountry1Change = (value: string) => {
     setCountry1(value);
-    const newYears = getYearsForCountry(value);
-    setYear1(newYears[0] || 2023);
+    const newYears = dataset?.yearsByCountry[value] ?? [];
+    const mostRecent = newYears[newYears.length - 1];
+    setYear1(mostRecent ?? null);
   };
 
   const handleCountry2Change = (value: string) => {
     setCountry2(value);
-    const newYears = getYearsForCountry(value);
-    setYear2(newYears[0] || 2023);
+    const newYears = dataset?.yearsByCountry[value] ?? [];
+    const mostRecent = newYears[newYears.length - 1];
+    setYear2(mostRecent ?? null);
   };
 
-  const data1 = useMemo(() => getCountryData(country1, year1), [country1, year1]);
-  const data2 = useMemo(() => getCountryData(country2, year2), [country2, year2]);
+  const data1 = useMemo(() => {
+    if (!dataset || !country1 || !year1) return undefined;
+    return dataset.getRow(country1, year1);
+  }, [dataset, country1, year1]);
 
-  // Get all EDI values for percentile calculation
-  const allEDIValues = useMemo(() => getAllEDIValues(), []);
+  const data2 = useMemo(() => {
+    if (!dataset || !country2 || !year2) return undefined;
+    return dataset.getRow(country2, year2);
+  }, [dataset, country2, year2]);
+
+  // Get all EDI values for percentile calculation (full DB)
+  const allEDIValues = dataset?.ediValues ?? [];
 
   const chartData = useMemo(() => {
-    if (!data1 || !data2) return [];
+    if (!dataset || !data1 || !data2) return [];
     
     return VARIABLE_KEYS.map((key) => ({
       variable: DSP_VARIABLES[key], // Use full variable names like Streamlit
       fullName: DSP_VARIABLES[key],
       shortName: key,
-      [country1]: normalizeValue(data1[key], MIN_MAX[key].min, MIN_MAX[key].max),
-      [country2]: normalizeValue(data2[key], MIN_MAX[key].min, MIN_MAX[key].max),
-      [`${country1}_raw`]: data1[key],
-      [`${country2}_raw`]: data2[key],
+      c1: normalizeValue(data1[key], dataset.minMax[key].min, dataset.minMax[key].max),
+      c2: normalizeValue(data2[key], dataset.minMax[key].min, dataset.minMax[key].max),
+      c1_raw: data1[key],
+      c2_raw: data2[key],
     }));
-  }, [data1, data2, country1, country2]);
+  }, [dataset, data1, data2]);
 
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
 
   return (
     <div className="space-y-6">
+      {loadError ? (
+        <div className="border rounded-lg p-4 text-sm">
+          <p className="font-semibold mb-1">Failed to load Democracy_Data.db</p>
+          <p className="text-muted-foreground">{loadError}</p>
+        </div>
+      ) : null}
+
       {/* Country Selectors */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Country 1 Selector */}
@@ -182,8 +181,13 @@ export function RadarChartComparison() {
               onValueChange={handleCountry1Change}
               countries={countries}
               label="Country 1"
+              disabled={!dataset}
             />
-            <Select value={year1.toString()} onValueChange={(v) => setYear1(parseInt(v))}>
+            <Select
+              value={year1 ? year1.toString() : ""}
+              onValueChange={(v) => setYear1(parseInt(v))}
+              disabled={!dataset || !years1.length}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Year" />
               </SelectTrigger>
@@ -208,8 +212,13 @@ export function RadarChartComparison() {
               onValueChange={handleCountry2Change}
               countries={countries}
               label="Country 2"
+              disabled={!dataset}
             />
-            <Select value={year2.toString()} onValueChange={(v) => setYear2(parseInt(v))}>
+            <Select
+              value={year2 ? year2.toString() : ""}
+              onValueChange={(v) => setYear2(parseInt(v))}
+              disabled={!dataset || !years2.length}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Year" />
               </SelectTrigger>
@@ -258,7 +267,7 @@ export function RadarChartComparison() {
               />
               <Radar
                 name={`${country1} (${year1})`}
-                dataKey={country1}
+                dataKey="c1"
                 stroke={COUNTRY_1_STROKE}
                 fill={COUNTRY_1_FILL}
                 fillOpacity={0.25}
@@ -266,37 +275,14 @@ export function RadarChartComparison() {
               />
               <Radar
                 name={`${country2} (${year2})`}
-                dataKey={country2}
+                dataKey="c2"
                 stroke={COUNTRY_2_STROKE}
                 fill={COUNTRY_2_FILL}
                 fillOpacity={0.25}
                 strokeWidth={2}
               />
               <Tooltip
-                content={({ active, payload }) => {
-                  if (!active || !payload?.length) return null;
-                  const data = payload[0].payload;
-                  return (
-                    <div className="bg-background border rounded-lg p-3 shadow-lg">
-                      <p className="font-semibold mb-1">{data.fullName}</p>
-                      <p className="text-xs text-muted-foreground mb-2">({data.shortName})</p>
-                      {payload.map((entry, i) => {
-                        const countryName = String(entry.name || '').split(' (')[0];
-                        const rawValue = data[`${countryName}_raw`];
-                        return (
-                          <div key={i} className="text-sm" style={{ color: entry.color }}>
-                            <p>{entry.name}</p>
-                            <p>Value: {typeof rawValue === "number" ? rawValue.toFixed(3) : "—"}</p>
-                            <p>
-                              Normalized:{" "}
-                              {typeof entry.value === "number" ? entry.value.toFixed(3) : "—"}
-                            </p>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  );
-                }}
+                content={<DspRadarTooltip />}
               />
               <Legend 
                 verticalAlign="top" 
