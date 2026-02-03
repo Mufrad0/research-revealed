@@ -10,19 +10,34 @@ import {
   Tooltip,
 } from "recharts";
 import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 import {
   DSP_VARIABLES,
   MIN_MAX,
@@ -34,6 +49,62 @@ import {
 } from "@/data/radarChartData";
 
 const VARIABLE_KEYS = Object.keys(DSP_VARIABLES) as DSPVariableKey[];
+
+interface CountryComboboxProps {
+  value: string;
+  onValueChange: (value: string) => void;
+  countries: string[];
+  colorDot: string;
+  label: string;
+}
+
+function CountryCombobox({ value, onValueChange, countries, colorDot, label }: CountryComboboxProps) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-full justify-between"
+        >
+          <span className="truncate">{value || `Select ${label}`}</span>
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[300px] p-0" align="start">
+        <Command>
+          <CommandInput placeholder={`Search ${label.toLowerCase()}...`} />
+          <CommandList>
+            <CommandEmpty>No country found.</CommandEmpty>
+            <CommandGroup>
+              {countries.map((country) => (
+                <CommandItem
+                  key={country}
+                  value={country}
+                  onSelect={() => {
+                    onValueChange(country);
+                    setOpen(false);
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      value === country ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                  {country}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
 
 export function RadarChartComparison() {
   const countries = useMemo(() => getCountries(), []);
@@ -67,8 +138,8 @@ export function RadarChartComparison() {
     if (!data1 || !data2) return [];
     
     return VARIABLE_KEYS.map((key) => ({
-      variable: key,
-      fullName: DSP_VARIABLES[key],
+      variable: DSP_VARIABLES[key],
+      shortName: key,
       [country1]: normalizeValue(data1[key], MIN_MAX[key].min, MIN_MAX[key].max),
       [country2]: normalizeValue(data2[key], MIN_MAX[key].min, MIN_MAX[key].max),
       [`${country1}_raw`]: data1[key],
@@ -89,16 +160,13 @@ export function RadarChartComparison() {
             <span className="font-semibold">Country 1</span>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <Select value={country1} onValueChange={handleCountry1Change}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select country" />
-              </SelectTrigger>
-              <SelectContent>
-                {countries.map((c) => (
-                  <SelectItem key={c} value={c}>{c}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <CountryCombobox
+              value={country1}
+              onValueChange={handleCountry1Change}
+              countries={countries}
+              colorDot="#648FFF"
+              label="Country 1"
+            />
             <Select value={year1.toString()} onValueChange={(v) => setYear1(parseInt(v))}>
               <SelectTrigger>
                 <SelectValue placeholder="Year" />
@@ -119,16 +187,13 @@ export function RadarChartComparison() {
             <span className="font-semibold">Country 2</span>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <Select value={country2} onValueChange={handleCountry2Change}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select country" />
-              </SelectTrigger>
-              <SelectContent>
-                {countries.map((c) => (
-                  <SelectItem key={c} value={c}>{c}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <CountryCombobox
+              value={country2}
+              onValueChange={handleCountry2Change}
+              countries={countries}
+              colorDot="#DC267F"
+              label="Country 2"
+            />
             <Select value={year2.toString()} onValueChange={(v) => setYear2(parseInt(v))}>
               <SelectTrigger>
                 <SelectValue placeholder="Year" />
@@ -148,11 +213,30 @@ export function RadarChartComparison() {
         {/* Radar Chart */}
         <div className="h-[400px] md:h-[500px]">
           <ResponsiveContainer width="100%" height="100%">
-            <RadarChart data={chartData} margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
+            <RadarChart data={chartData} margin={{ top: 20, right: 80, bottom: 20, left: 80 }}>
               <PolarGrid stroke="hsl(var(--border))" />
               <PolarAngleAxis 
                 dataKey="variable" 
-                tick={{ fill: "hsl(var(--foreground))", fontSize: 12 }}
+                tick={({ x, y, payload, textAnchor }) => (
+                  <text
+                    x={x}
+                    y={y}
+                    textAnchor={textAnchor}
+                    fill="hsl(var(--foreground))"
+                    fontSize={11}
+                    className="select-none"
+                  >
+                    {payload.value.split(' ').map((word: string, i: number, arr: string[]) => (
+                      <tspan
+                        key={i}
+                        x={x}
+                        dy={i === 0 ? 0 : 12}
+                      >
+                        {word}
+                      </tspan>
+                    ))}
+                  </text>
+                )}
               />
               <PolarRadiusAxis 
                 angle={90} 
@@ -182,7 +266,8 @@ export function RadarChartComparison() {
                   const data = payload[0].payload;
                   return (
                     <div className="bg-background border rounded-lg p-3 shadow-lg">
-                      <p className="font-semibold mb-2">{data.fullName}</p>
+                      <p className="font-semibold mb-2">{data.variable}</p>
+                      <p className="text-xs text-muted-foreground mb-2">({data.shortName})</p>
                       {payload.map((entry, i) => (
                         <p key={i} className="text-sm" style={{ color: entry.color }}>
                           {entry.name}: {(Number(entry.value) * 100).toFixed(0)}%
