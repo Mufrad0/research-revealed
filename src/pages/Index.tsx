@@ -110,10 +110,11 @@ function StatCard({ value, label, icon: Icon }: { value: number; label: string; 
   const { count, ref } = useAnimatedCounter(value);
   
   return (
-    <Card className="border shadow-sm bg-card hover-lift cursor-default">
-      <CardContent className="p-6 flex items-center gap-4" ref={ref}>
-        <div className="p-3 rounded-full bg-accent/10">
-          <Icon className="h-6 w-6 text-accent" />
+    <Card className="border shadow-sm bg-card hover-lift cursor-default group overflow-hidden relative">
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <CardContent className="p-6 flex items-center gap-4 relative" ref={ref}>
+        <div className="p-3 rounded-full bg-accent/10 group-hover:bg-accent/20 transition-colors duration-300">
+          <Icon className="h-6 w-6 text-accent group-hover:scale-110 transition-transform duration-300" />
         </div>
         <div>
           <p className="text-2xl font-bold text-foreground stat-counter">{count}</p>
@@ -128,8 +129,11 @@ const Index = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 bg-secondary/50">
-        <div className="container">
+      <section className="relative py-20 lg:py-32 overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
+        {/* Decorative elements */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-accent/5 rounded-full blur-3xl float-decoration" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl float-decoration" style={{ animationDelay: '-3s' }} />
+        <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -145,7 +149,9 @@ const Index = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
             >
-              How are dimensions of democracy associated with beneficial vs harmful social media practices?
+              How are dimensions of democracy associated with{' '}
+              <span className="gradient-text">beneficial</span> vs{' '}
+              <span className="text-harmful">harmful</span> social media practices?
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -163,13 +169,13 @@ const Index = () => {
               className="flex flex-wrap justify-center gap-4 mb-12"
             >
               <Link to="/methodology">
-                <Button size="lg" className="group">
+                <Button size="lg" className="group glow-accent">
                   Explore Research
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link to="/team">
-                <Button size="lg" variant="outline">
+                <Button size="lg" variant="outline" className="hover:border-accent/50 transition-colors">
                   Meet the Team
                 </Button>
               </Link>
@@ -202,7 +208,7 @@ const Index = () => {
         and negative phenomena (disinformation, polarization) are increasing simultaneously."
         linkTo="/global-trends"
       >
-        <div className="rounded-xl overflow-hidden shadow-lg border bg-card hover-lift">
+        <div className="image-reveal rounded-xl overflow-hidden shadow-lg border bg-card">
           <img 
             src={internetTimeSeries} 
             alt="Internet Time Series showing global trends from 2000-2024" 
@@ -212,14 +218,17 @@ const Index = () => {
       </VisualizationSection>
 
       {/* Correlation Analysis Section */}
-      <section id="correlation" className="py-16 lg:py-24 bg-secondary/30">
-        <div className="container">
+      <section id="correlation" className="py-16 lg:py-24 relative overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(var(--accent)/0.05),transparent_50%)]" />
+        <div className="container relative z-10">
           <AnimatedSection className="text-center max-w-3xl mx-auto mb-12">
             <p className="text-sm font-medium text-accent uppercase tracking-wider mb-2">
               Correlation Analysis
             </p>
             <h2 className="font-serif text-3xl lg:text-4xl font-bold mb-4">
-              Democracy indices show opposite correlations with beneficial vs harmful practices
+              Democracy indices show{' '}
+              <span className="gradient-text">opposite correlations</span>{' '}
+              with beneficial vs harmful practices
             </h2>
             <p className="text-lg text-muted-foreground">
               Online Media Perspectives shows the strongest positive correlation with democracy,
@@ -229,10 +238,10 @@ const Index = () => {
           <StaggerContainer className="grid md:grid-cols-2 gap-8">
             <StaggerItem className="space-y-4 flex flex-col">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-beneficial" />
+                <div className="w-3 h-3 rounded-full bg-beneficial animate-pulse" />
                 <h3 className="font-semibold text-lg">Beneficial Practices</h3>
               </div>
-              <div className="rounded-xl overflow-hidden shadow-lg border bg-card flex-1 hover-lift">
+              <div className="image-reveal rounded-xl overflow-hidden shadow-lg border bg-card flex-1">
                 <img 
                   src={correlationBeneficial} 
                   alt="Correlation heatmap for beneficial social media practices" 
@@ -242,10 +251,10 @@ const Index = () => {
             </StaggerItem>
             <StaggerItem className="space-y-4 flex flex-col">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-harmful" />
+                <div className="w-3 h-3 rounded-full bg-harmful animate-pulse" />
                 <h3 className="font-semibold text-lg">Harmful Practices</h3>
               </div>
-              <div className="rounded-xl overflow-hidden shadow-lg border bg-card flex-1 hover-lift">
+              <div className="image-reveal rounded-xl overflow-hidden shadow-lg border bg-card flex-1">
                 <img 
                   src={correlationHarmful} 
                   alt="Correlation heatmap for harmful social media practices" 
@@ -256,7 +265,7 @@ const Index = () => {
           </StaggerContainer>
           <AnimatedSection delay={0.3} className="text-center mt-8">
             <Link to="/correlation">
-              <Button variant="outline" className="group">
+              <Button variant="outline" className="group hover:border-accent/50 transition-colors">
                 Deep Dive into Correlations
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
@@ -276,7 +285,7 @@ const Index = () => {
         linkTo="/country-comparison"
         reverse
       >
-        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card hover-lift">
+        <div className="image-reveal rounded-xl overflow-hidden shadow-2xl border bg-card">
           <img 
             src={ddiVenezuelaUS} 
             alt="DDI comparison between Venezuela and USA over time" 
@@ -295,7 +304,7 @@ const Index = () => {
         linkTo="/expert-uncertainty"
         linkLabel="Explore Data Reliability"
       >
-        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card hover-lift">
+        <div className="image-reveal rounded-xl overflow-hidden shadow-2xl border bg-card">
           <img 
             src={expertDisagreement} 
             alt="Expert disagreement trends for internet-related variables" 
@@ -315,7 +324,7 @@ const Index = () => {
         linkLabel="View Full Analysis"
         reverse
       >
-        <div className="rounded-xl overflow-hidden shadow-2xl border bg-card hover-lift">
+        <div className="image-reveal rounded-xl overflow-hidden shadow-2xl border bg-card">
           <img 
             src={topUncertain} 
             alt="Top 15 countries with highest expert uncertainty" 
@@ -350,8 +359,9 @@ const Index = () => {
       </section>
 
       {/* CTA Cards */}
-      <section className="py-16 lg:py-24 bg-secondary/30">
-        <div className="container">
+      <section className="py-16 lg:py-24 relative overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,hsl(var(--accent)/0.05),transparent_50%)]" />
+        <div className="container relative z-10">
           <AnimatedSection className="text-center mb-12">
             <h2 className="font-serif text-3xl lg:text-4xl font-bold mb-4">
               Dive Deeper
@@ -380,12 +390,13 @@ const Index = () => {
             ].map((card) => (
               <StaggerItem key={card.href}>
                 <Link to={card.href}>
-                  <Card className="h-full hover-lift border hover:border-accent/50 transition-colors">
-                    <CardContent className="p-6">
-                      <h3 className="font-serif text-xl font-bold mb-2">{card.title}</h3>
+                  <Card className="h-full hover-lift border hover:border-accent/50 transition-all duration-300 group overflow-hidden relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <CardContent className="p-6 relative">
+                      <h3 className="font-serif text-xl font-bold mb-2 group-hover:text-accent transition-colors duration-300">{card.title}</h3>
                       <p className="text-muted-foreground mb-4">{card.description}</p>
-                      <span className="text-accent font-medium inline-flex items-center group">
-                        Learn more <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      <span className="text-accent font-medium inline-flex items-center group/link">
+                        Learn more <ArrowRight className="ml-1 h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
                       </span>
                     </CardContent>
                   </Card>
