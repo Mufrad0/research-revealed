@@ -45,21 +45,17 @@ import {
   getCountries,
   getYearsForCountry,
   getCountryData,
+  getAllEDIValues,
   type DSPVariableKey,
 } from "@/data/radarChartData";
 
 const VARIABLE_KEYS = Object.keys(DSP_VARIABLES) as DSPVariableKey[];
 
-// Short labels for radar chart axes to prevent overlapping
-const SHORT_LABELS: Record<DSPVariableKey, string> = {
-  COM: "Online & Social Media",
-  OMP: "Media Perspectives",
-  PEC: "Political & Election",
-  GD: "Gov. Disinfo.",
-  PD: "Party Disinfo.",
-  OMF: "Fractionalization",
-  SMV: "Social Violence",
-};
+// Calculate EDI percentile
+function calculatePercentile(ediValue: number, allEDIValues: number[]): number {
+  const count = allEDIValues.filter(v => v <= ediValue).length;
+  return (count / allEDIValues.length) * 100;
+}
 
 interface CountryComboboxProps {
   value: string;
@@ -145,11 +141,14 @@ export function RadarChartComparison() {
   const data1 = useMemo(() => getCountryData(country1, year1), [country1, year1]);
   const data2 = useMemo(() => getCountryData(country2, year2), [country2, year2]);
 
+  // Get all EDI values for percentile calculation
+  const allEDIValues = useMemo(() => getAllEDIValues(), []);
+
   const chartData = useMemo(() => {
     if (!data1 || !data2) return [];
     
     return VARIABLE_KEYS.map((key) => ({
-      variable: SHORT_LABELS[key],
+      variable: DSP_VARIABLES[key], // Use full variable names like Streamlit
       fullName: DSP_VARIABLES[key],
       shortName: key,
       [country1]: normalizeValue(data1[key], MIN_MAX[key].min, MIN_MAX[key].max),
@@ -220,26 +219,31 @@ export function RadarChartComparison() {
         </div>
       </div>
 
-      {/* Radar Chart and EDI Comparison */}
-      <div className="grid lg:grid-cols-[1fr,200px] gap-6">
+      {/* Radar Chart and EDI Comparison - matching Streamlit layout */}
+      <div className="grid lg:grid-cols-[3fr,1fr] gap-6">
         {/* Radar Chart */}
-        <div className="h-[400px] md:h-[500px]">
+        <div className="h-[500px] md:h-[600px]">
+          <h3 className="text-center font-semibold mb-4">DSP Variables Comparison</h3>
           <ResponsiveContainer width="100%" height="100%">
-            <RadarChart data={chartData} margin={{ top: 40, right: 100, bottom: 40, left: 100 }}>
+            <RadarChart data={chartData} margin={{ top: 60, right: 120, bottom: 60, left: 120 }}>
               <PolarGrid stroke="hsl(var(--border))" />
               <PolarAngleAxis 
                 dataKey="variable" 
                 tick={{ 
                   fill: "hsl(var(--foreground))", 
-                  fontSize: 11,
+                  fontSize: 10,
                 }}
                 tickLine={false}
               />
               <PolarRadiusAxis 
                 angle={90} 
                 domain={[0, 1]} 
-                tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
+                tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 9 }}
                 tickCount={5}
+                tickFormatter={(value) => {
+                  const labels: Record<number, string> = { 0: 'Min', 0.25: '25%', 0.5: '50%', 0.75: '75%', 1: 'Max' };
+                  return labels[value] || '';
+                }}
               />
               <Radar
                 name={`${country1} (${year1})`}
@@ -265,48 +269,76 @@ export function RadarChartComparison() {
                     <div className="bg-background border rounded-lg p-3 shadow-lg">
                       <p className="font-semibold mb-1">{data.fullName}</p>
                       <p className="text-xs text-muted-foreground mb-2">({data.shortName})</p>
-                      {payload.map((entry, i) => (
-                        <p key={i} className="text-sm" style={{ color: entry.color }}>
-                          {entry.name}: {(Number(entry.value) * 100).toFixed(0)}%
-                        </p>
-                      ))}
+                      {payload.map((entry, i) => {
+                        const countryName = String(entry.name || '').split(' (')[0];
+                        const rawValue = data[`${countryName}_raw`];
+                        return (
+                          <div key={i} className="text-sm" style={{ color: entry.color }}>
+                            <p>{entry.name}</p>
+                            <p>Value: {rawValue?.toFixed(3)}</p>
+                            <p>Normalized: {(Number(entry.value) * 100).toFixed(0)}%</p>
+                          </div>
+                        );
+                      })}
                     </div>
                   );
                 }}
               />
-              <Legend />
+              <Legend 
+                verticalAlign="top" 
+                align="center"
+                wrapperStyle={{ paddingBottom: 20 }}
+              />
             </RadarChart>
           </ResponsiveContainer>
         </div>
 
-        {/* EDI Comparison */}
+        {/* EDI Comparison - matching Streamlit design */}
         <div className="space-y-4">
-          <h3 className="font-semibold text-lg">EDI Score</h3>
+          <h3 className="font-semibold text-lg flex items-center gap-2">
+            📊 EDI
+          </h3>
           
           {data1 && (
-            <Card>
+            <Card className="border-l-4" style={{ borderLeftColor: "#648FFF" }}>
               <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground mb-1">{country1} ({year1})</p>
-                <p className="text-2xl font-bold" style={{ color: "#648FFF" }}>
-                  {data1.EDI.toFixed(2)}
+                <p className="text-sm font-medium mb-1">
+                  <span className="font-bold">{country1}</span> ({year1})
                 </p>
-              </CardContent>
-            </Card>
-          )}
-          
-          {data2 && (
-            <Card>
-              <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground mb-1">{country2} ({year2})</p>
-                <p className="text-2xl font-bold" style={{ color: "#DC267F" }}>
-                  {data2.EDI.toFixed(2)}
+                <p className="text-xs text-muted-foreground mb-2">EDI Score</p>
+                <p className="text-3xl font-bold" style={{ color: "#648FFF" }}>
+                  {data1.EDI.toFixed(3)}
+                </p>
+                <p className="text-sm text-green-600 mt-1">
+                  ↑ {calculatePercentile(data1.EDI, allEDIValues).toFixed(1)}% percentile
                 </p>
               </CardContent>
             </Card>
           )}
 
+          <div className="border-t border-border" />
+          
+          {data2 && (
+            <Card className="border-l-4" style={{ borderLeftColor: "#DC267F" }}>
+              <CardContent className="p-4">
+                <p className="text-sm font-medium mb-1">
+                  <span className="font-bold">{country2}</span> ({year2})
+                </p>
+                <p className="text-xs text-muted-foreground mb-2">EDI Score</p>
+                <p className="text-3xl font-bold" style={{ color: "#DC267F" }}>
+                  {data2.EDI.toFixed(3)}
+                </p>
+                <p className="text-sm text-green-600 mt-1">
+                  ↑ {calculatePercentile(data2.EDI, allEDIValues).toFixed(1)}% percentile
+                </p>
+              </CardContent>
+            </Card>
+          )}
+
+          <div className="border-t border-border" />
+
           <p className="text-xs text-muted-foreground">
-            <strong>EDI</strong> = Electoral Democracy Index (0-1). Higher = stronger democracy.
+            <strong>EDI</strong> measures electoral democracy (0-1). Higher = stronger democracy.
           </p>
         </div>
       </div>
