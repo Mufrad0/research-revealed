@@ -216,3 +216,7 @@ export function getYearsForCountry(countryName: string): number[] {
 export function getCountryData(countryName: string, year: number): CountryData | undefined {
   return COUNTRY_DATA.find(d => d.country_name === countryName && d.year === year);
 }
+
+export function getAllEDIValues(): number[] {
+  return COUNTRY_DATA.map(d => d.EDI);
+}
