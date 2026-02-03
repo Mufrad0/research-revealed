@@ -41,7 +41,7 @@ export default function CountryComparison() {
       <section className="py-16 bg-secondary/30">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <Card className="border-2">
+            <Card className="border-2 hover-lift">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-4xl">🇻🇪</span>
@@ -59,15 +59,21 @@ export default function CountryComparison() {
                     media—to spread propaganda and undermine opposition voices.
                   </p>
                   <p>
-                    By 2020, Venezuela had some of the lowest DDI scores and highest government 
-                    disinformation scores in Latin America, illustrating the strong inverse 
-                    relationship between these variables.
+                    <strong className="text-foreground">Recent events in 2024</strong> illustrate 
+                    this pattern: following the disputed July presidential election, the Maduro 
+                    government launched widespread disinformation campaigns while blocking 
+                    independent election monitors and censoring opposition communications. 
+                    International observers reported systematic manipulation of information flows.
+                  </p>
+                  <p>
+                    By 2024, Venezuela remains among the lowest DDI scores globally, demonstrating 
+                    the strong inverse relationship between deliberative democracy and state disinformation.
                   </p>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-2">
+            <Card className="border-2 hover-lift">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-4xl">🇺🇸</span>
@@ -77,18 +83,25 @@ export default function CountryComparison() {
                   <p>
                     The USA shows a more <strong className="text-foreground">subtle but 
                     concerning pattern</strong>. Historically scoring high on all democracy 
-                    indices, the country has seen modest declines in deliberative democracy 
+                    indices, the country has seen notable declines in deliberative democracy 
                     measures since 2016.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">The 2020 election and January 6, 2021 
+                    events</strong> marked a significant inflection point. Widespread election 
+                    disinformation, amplified through social media echo chambers, contributed to 
+                    unprecedented challenges to democratic norms.
                   </p>
                   <p>
                     While government disinformation remains relatively low by global standards, 
                     <strong className="text-foreground">party disinformation and online media 
-                    fractionalization</strong> have increased significantly.
+                    fractionalization</strong> continue to intensify through the 2024 election cycle, 
+                    with AI-generated content adding new dimensions to information warfare.
                   </p>
                   <p>
                     This suggests that in established democracies, threats to deliberation may 
-                    come more from political polarization and echo chambers than from state-sponsored
-                    disinformation.
+                    come more from political polarization, algorithmic amplification, and partisan 
+                    media ecosystems than from state-sponsored disinformation.
                   </p>
                 </div>
               </CardContent>
