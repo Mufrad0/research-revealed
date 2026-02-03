@@ -52,9 +52,9 @@ const VARIABLE_KEYS = Object.keys(DSP_VARIABLES) as DSPVariableKey[];
 
 // Short labels for radar chart axes to prevent overlapping
 const SHORT_LABELS: Record<DSPVariableKey, string> = {
-  COM: "Media Consumption",
+  COM: "Online & Social Media",
   OMP: "Media Perspectives",
-  PEC: "Election Comm.",
+  PEC: "Political & Election",
   GD: "Gov. Disinfo.",
   PD: "Party Disinfo.",
   OMF: "Fractionalization",

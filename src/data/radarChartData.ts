@@ -1,8 +1,8 @@
-// DSP variable definitions
+// DSP variable definitions (from NB02 database schema)
 export const DSP_VARIABLES = {
-  COM: 'Online Media Consumption',
+  COM: 'Consumption of Online and Social Media',
   OMP: 'Online Media Perspectives',
-  PEC: 'Political/Election Communication',
+  PEC: 'Political and Election Communication',
   GD: 'Government Disinformation',
   PD: 'Party Disinformation',
   OMF: 'Online Media Fractionalization',
@@ -189,15 +189,15 @@ export const COUNTRY_DATA: CountryData[] = [
   { country_name: "Bangladesh", country_code: "BGD", year: 2010, COM: 0.79, OMP: -0.02, PEC: -0.45, GD: -0.65, PD: -0.42, OMF: -0.25, SMV: -0.32, EDI: 0.52 },
 ];
 
-// Calculate min/max for normalization
+// Calculate min/max for normalization (from NB02 actual data ranges)
 export const MIN_MAX: Record<DSPVariableKey, { min: number; max: number }> = {
-  COM: { min: -0.54, max: 2.89 },
-  OMP: { min: -2.56, max: 2.76 },
-  PEC: { min: -2.89, max: 2.45 },
-  GD: { min: -3.12, max: 2.89 },
-  PD: { min: -2.89, max: 2.67 },
-  OMF: { min: -1.78, max: 1.98 },
-  SMV: { min: -1.89, max: 2.45 }
+  COM: { min: -3.412, max: 3.031 },
+  OMP: { min: -3.89, max: 2.809 },
+  PEC: { min: -3.641, max: 3.309 },
+  GD: { min: -3.127, max: 3.687 },
+  PD: { min: -3.193, max: 3.44 },
+  OMF: { min: -3.466, max: 3.553 },
+  SMV: { min: -3.038, max: 4.004 }
 };
 
 export function normalizeValue(value: number, min: number, max: number): number {
