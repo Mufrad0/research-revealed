@@ -25,29 +25,41 @@ export default function ExpertUncertainty() {
         </div>
       </section>
 
-      {/* Main Visualizations */}
+      {/* Expert Disagreement Over Time */}
       <section className="py-16">
         <div className="container">
-          <div className="grid lg:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <h3 className="font-serif text-xl font-bold">Expert Disagreement Over Time</h3>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
-                <img 
-                  src={expertDisagreement} 
-                  alt="Expert disagreement trends for internet-related variables" 
-                  className="w-full h-auto"
-                />
-              </div>
+          <div className="max-w-4xl mx-auto space-y-4">
+            <h3 className="font-serif text-2xl font-bold">Expert Disagreement Over Time</h3>
+            <p className="text-muted-foreground">
+              Expert disagreement for internet-related variables has risen sharply since 2020, 
+              reflecting the growing complexity of measuring digital phenomena.
+            </p>
+            <div className="rounded-xl overflow-hidden shadow-lg border bg-card hover-lift">
+              <img 
+                src={expertDisagreement} 
+                alt="Expert disagreement trends for internet-related variables" 
+                className="w-full h-auto"
+              />
             </div>
-            <div className="space-y-4">
-              <h3 className="font-serif text-xl font-bold">Top 15 Countries with Highest Uncertainty</h3>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
-                <img 
-                  src={topUncertain} 
-                  alt="Top 15 countries with highest expert uncertainty" 
-                  className="w-full h-auto"
-                />
-              </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Top 15 Uncertain Countries */}
+      <section className="py-16 bg-secondary/30">
+        <div className="container">
+          <div className="max-w-4xl mx-auto space-y-4">
+            <h3 className="font-serif text-2xl font-bold">Top 15 Countries with Highest Uncertainty</h3>
+            <p className="text-muted-foreground">
+              On average, experts disagree most on internet measures in small, stable democracies 
+              and closed autocracies—countries where data collection is challenging.
+            </p>
+            <div className="rounded-xl overflow-hidden shadow-lg border bg-card hover-lift">
+              <img 
+                src={topUncertain} 
+                alt="Top 15 countries with highest expert uncertainty" 
+                className="w-full h-auto"
+              />
             </div>
           </div>
         </div>
