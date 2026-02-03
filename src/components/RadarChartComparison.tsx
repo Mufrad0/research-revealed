@@ -51,6 +51,13 @@ import {
 
 const VARIABLE_KEYS = Object.keys(DSP_VARIABLES) as DSPVariableKey[];
 
+const COUNTRY_1_STROKE = "hsl(var(--chart-blue))";
+const COUNTRY_1_FILL = "hsl(var(--chart-blue))";
+const COUNTRY_2_STROKE = "hsl(var(--chart-magenta))";
+const COUNTRY_2_FILL = "hsl(var(--chart-magenta))";
+
+const RADIAL_TICKS = [0, 0.25, 0.5, 0.75, 1] as const;
+
 // Calculate EDI percentile
 function calculatePercentile(ediValue: number, allEDIValues: number[]): number {
   const count = allEDIValues.filter(v => v <= ediValue).length;
@@ -61,11 +68,10 @@ interface CountryComboboxProps {
   value: string;
   onValueChange: (value: string) => void;
   countries: string[];
-  colorDot: string;
   label: string;
 }
 
-function CountryCombobox({ value, onValueChange, countries, colorDot, label }: CountryComboboxProps) {
+function CountryCombobox({ value, onValueChange, countries, label }: CountryComboboxProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -167,7 +173,7 @@ export function RadarChartComparison() {
         {/* Country 1 Selector */}
         <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#648FFF" }} />
+            <div className="w-3 h-3 rounded-full bg-chart-blue" />
             <span className="font-semibold">Country 1</span>
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -175,7 +181,6 @@ export function RadarChartComparison() {
               value={country1}
               onValueChange={handleCountry1Change}
               countries={countries}
-              colorDot="#648FFF"
               label="Country 1"
             />
             <Select value={year1.toString()} onValueChange={(v) => setYear1(parseInt(v))}>
@@ -194,7 +199,7 @@ export function RadarChartComparison() {
         {/* Country 2 Selector */}
         <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#DC267F" }} />
+            <div className="w-3 h-3 rounded-full bg-chart-magenta" />
             <span className="font-semibold">Country 2</span>
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -202,7 +207,6 @@ export function RadarChartComparison() {
               value={country2}
               onValueChange={handleCountry2Change}
               countries={countries}
-              colorDot="#DC267F"
               label="Country 2"
             />
             <Select value={year2.toString()} onValueChange={(v) => setYear2(parseInt(v))}>
@@ -239,25 +243,32 @@ export function RadarChartComparison() {
                 angle={90} 
                 domain={[0, 1]} 
                 tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 9 }}
-                tickCount={5}
+                // Recharts' TS types are stricter than runtime here; numbers are valid tick values.
+                ticks={RADIAL_TICKS as unknown as any[]}
+                tickLine={false}
                 tickFormatter={(value) => {
-                  const labels: Record<number, string> = { 0: 'Min', 0.25: '25%', 0.5: '50%', 0.75: '75%', 1: 'Max' };
-                  return labels[value] || '';
+                  const v = typeof value === "number" ? value : Number(value);
+                  if (v === 0) return "Min";
+                  if (v === 0.25) return "25%";
+                  if (v === 0.5) return "50%";
+                  if (v === 0.75) return "75%";
+                  if (v === 1) return "Max";
+                  return "";
                 }}
               />
               <Radar
                 name={`${country1} (${year1})`}
                 dataKey={country1}
-                stroke="#648FFF"
-                fill="#648FFF"
+                stroke={COUNTRY_1_STROKE}
+                fill={COUNTRY_1_FILL}
                 fillOpacity={0.25}
                 strokeWidth={2}
               />
               <Radar
                 name={`${country2} (${year2})`}
                 dataKey={country2}
-                stroke="#DC267F"
-                fill="#DC267F"
+                stroke={COUNTRY_2_STROKE}
+                fill={COUNTRY_2_FILL}
                 fillOpacity={0.25}
                 strokeWidth={2}
               />
@@ -275,8 +286,11 @@ export function RadarChartComparison() {
                         return (
                           <div key={i} className="text-sm" style={{ color: entry.color }}>
                             <p>{entry.name}</p>
-                            <p>Value: {rawValue?.toFixed(3)}</p>
-                            <p>Normalized: {(Number(entry.value) * 100).toFixed(0)}%</p>
+                            <p>Value: {typeof rawValue === "number" ? rawValue.toFixed(3) : "—"}</p>
+                            <p>
+                              Normalized:{" "}
+                              {typeof entry.value === "number" ? entry.value.toFixed(3) : "—"}
+                            </p>
                           </div>
                         );
                       })}
@@ -300,17 +314,17 @@ export function RadarChartComparison() {
           </h3>
           
           {data1 && (
-            <Card className="border-l-4" style={{ borderLeftColor: "#648FFF" }}>
+            <Card className="border-l-4 border-chart-blue">
               <CardContent className="p-4">
                 <p className="text-sm font-medium mb-1">
                   <span className="font-bold">{country1}</span> ({year1})
                 </p>
                 <p className="text-xs text-muted-foreground mb-2">EDI Score</p>
-                <p className="text-3xl font-bold" style={{ color: "#648FFF" }}>
+                <p className="text-3xl font-bold text-chart-blue">
                   {data1.EDI.toFixed(3)}
                 </p>
-                <p className="text-sm text-green-600 mt-1">
-                  ↑ {calculatePercentile(data1.EDI, allEDIValues).toFixed(1)}% percentile
+                <p className="text-sm text-muted-foreground mt-1">
+                  {calculatePercentile(data1.EDI, allEDIValues).toFixed(1)}% percentile
                 </p>
               </CardContent>
             </Card>
@@ -319,17 +333,17 @@ export function RadarChartComparison() {
           <div className="border-t border-border" />
           
           {data2 && (
-            <Card className="border-l-4" style={{ borderLeftColor: "#DC267F" }}>
+            <Card className="border-l-4 border-chart-magenta">
               <CardContent className="p-4">
                 <p className="text-sm font-medium mb-1">
                   <span className="font-bold">{country2}</span> ({year2})
                 </p>
                 <p className="text-xs text-muted-foreground mb-2">EDI Score</p>
-                <p className="text-3xl font-bold" style={{ color: "#DC267F" }}>
+                <p className="text-3xl font-bold text-chart-magenta">
                   {data2.EDI.toFixed(3)}
                 </p>
-                <p className="text-sm text-green-600 mt-1">
-                  ↑ {calculatePercentile(data2.EDI, allEDIValues).toFixed(1)}% percentile
+                <p className="text-sm text-muted-foreground mt-1">
+                  {calculatePercentile(data2.EDI, allEDIValues).toFixed(1)}% percentile
                 </p>
               </CardContent>
             </Card>

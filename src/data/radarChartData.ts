@@ -189,16 +189,34 @@ export const COUNTRY_DATA: CountryData[] = [
   { country_name: "Bangladesh", country_code: "BGD", year: 2010, COM: 0.79, OMP: -0.02, PEC: -0.45, GD: -0.65, PD: -0.42, OMF: -0.25, SMV: -0.32, EDI: 0.52 },
 ];
 
-// Calculate min/max for normalization (from NB02 actual data ranges)
-export const MIN_MAX: Record<DSPVariableKey, { min: number; max: number }> = {
-  COM: { min: -3.412, max: 3.031 },
-  OMP: { min: -3.89, max: 2.809 },
-  PEC: { min: -3.641, max: 3.309 },
-  GD: { min: -3.127, max: 3.687 },
-  PD: { min: -3.193, max: 3.44 },
-  OMF: { min: -3.466, max: 3.553 },
-  SMV: { min: -3.038, max: 4.004 }
-};
+// Calculate min/max for normalization across all countries/years (matches Streamlit DB logic)
+export const MIN_MAX: Record<DSPVariableKey, { min: number; max: number }> = (() => {
+  const keys = Object.keys(DSP_VARIABLES) as DSPVariableKey[];
+  const result = {} as Record<DSPVariableKey, { min: number; max: number }>;
+
+  for (const key of keys) {
+    let min = Infinity;
+    let max = -Infinity;
+
+    for (const row of COUNTRY_DATA) {
+      const v = row[key];
+      if (Number.isFinite(v)) {
+        if (v < min) min = v;
+        if (v > max) max = v;
+      }
+    }
+
+    // Defensive fallback (should not occur with valid data)
+    if (!Number.isFinite(min) || !Number.isFinite(max)) {
+      min = 0;
+      max = 1;
+    }
+
+    result[key] = { min, max };
+  }
+
+  return result;
+})();
 
 export function normalizeValue(value: number, min: number, max: number): number {
   if (max === min) return 0.5;
