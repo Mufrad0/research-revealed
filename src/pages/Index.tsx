@@ -228,24 +228,24 @@ const Index = () => {
               than others. Analyzing expert disagreement helps us understand where our findings are most robust.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-4 flex flex-col">
+          <div className="grid md:grid-cols-2 gap-8 items-stretch">
+            <div className="space-y-4">
               <h3 className="font-semibold text-lg">Expert Disagreement Over Time</h3>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card flex-1 flex items-center">
+              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
                 <img 
                   src={expertDisagreement} 
                   alt="Expert disagreement trends for internet-related variables" 
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto"
                 />
               </div>
             </div>
-            <div className="space-y-4 flex flex-col">
+            <div className="space-y-4">
               <h3 className="font-semibold text-lg">Top 15 Countries with Highest Uncertainty</h3>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card flex-1 flex items-center">
+              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
                 <img 
                   src={topUncertain} 
                   alt="Top 15 countries with highest expert uncertainty" 
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto"
                 />
               </div>
             </div>

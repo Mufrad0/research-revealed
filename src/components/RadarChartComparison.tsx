@@ -50,6 +50,17 @@ import {
 
 const VARIABLE_KEYS = Object.keys(DSP_VARIABLES) as DSPVariableKey[];
 
+// Short labels for radar chart axes to prevent overlapping
+const SHORT_LABELS: Record<DSPVariableKey, string> = {
+  COM: "Media Consumption",
+  OMP: "Media Perspectives",
+  PEC: "Election Comm.",
+  GD: "Gov. Disinfo.",
+  PD: "Party Disinfo.",
+  OMF: "Fractionalization",
+  SMV: "Social Violence",
+};
+
 interface CountryComboboxProps {
   value: string;
   onValueChange: (value: string) => void;
@@ -138,7 +149,8 @@ export function RadarChartComparison() {
     if (!data1 || !data2) return [];
     
     return VARIABLE_KEYS.map((key) => ({
-      variable: DSP_VARIABLES[key],
+      variable: SHORT_LABELS[key],
+      fullName: DSP_VARIABLES[key],
       shortName: key,
       [country1]: normalizeValue(data1[key], MIN_MAX[key].min, MIN_MAX[key].max),
       [country2]: normalizeValue(data2[key], MIN_MAX[key].min, MIN_MAX[key].max),
@@ -213,30 +225,15 @@ export function RadarChartComparison() {
         {/* Radar Chart */}
         <div className="h-[400px] md:h-[500px]">
           <ResponsiveContainer width="100%" height="100%">
-            <RadarChart data={chartData} margin={{ top: 20, right: 80, bottom: 20, left: 80 }}>
+            <RadarChart data={chartData} margin={{ top: 40, right: 100, bottom: 40, left: 100 }}>
               <PolarGrid stroke="hsl(var(--border))" />
               <PolarAngleAxis 
                 dataKey="variable" 
-                tick={({ x, y, payload, textAnchor }) => (
-                  <text
-                    x={x}
-                    y={y}
-                    textAnchor={textAnchor}
-                    fill="hsl(var(--foreground))"
-                    fontSize={11}
-                    className="select-none"
-                  >
-                    {payload.value.split(' ').map((word: string, i: number, arr: string[]) => (
-                      <tspan
-                        key={i}
-                        x={x}
-                        dy={i === 0 ? 0 : 12}
-                      >
-                        {word}
-                      </tspan>
-                    ))}
-                  </text>
-                )}
+                tick={{ 
+                  fill: "hsl(var(--foreground))", 
+                  fontSize: 11,
+                }}
+                tickLine={false}
               />
               <PolarRadiusAxis 
                 angle={90} 
@@ -266,7 +263,7 @@ export function RadarChartComparison() {
                   const data = payload[0].payload;
                   return (
                     <div className="bg-background border rounded-lg p-3 shadow-lg">
-                      <p className="font-semibold mb-2">{data.variable}</p>
+                      <p className="font-semibold mb-1">{data.fullName}</p>
                       <p className="text-xs text-muted-foreground mb-2">({data.shortName})</p>
                       {payload.map((entry, i) => (
                         <p key={i} className="text-sm" style={{ color: entry.color }}>
