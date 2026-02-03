@@ -10,7 +10,7 @@ export default function GlobalTrends() {
         <div className="container">
           <div className="max-w-3xl">
             <p className="text-sm font-medium text-accent uppercase tracking-wider mb-4">
-              Salma's Analysis
+              Time Series Analysis
             </p>
             <h1 className="font-serif text-4xl lg:text-5xl font-bold mb-6">
               Global Trends in Digital Society Practices

@@ -10,7 +10,7 @@ export default function CountryComparison() {
         <div className="container">
           <div className="max-w-3xl">
             <p className="text-sm font-medium text-accent uppercase tracking-wider mb-4">
-              James's Analysis
+              Case Study
             </p>
             <h1 className="font-serif text-4xl lg:text-5xl font-bold mb-6">
               Country Comparison: Venezuela vs USA
