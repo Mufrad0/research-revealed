@@ -155,29 +155,29 @@ const Index = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-4">
+            <div className="space-y-4 flex flex-col">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-beneficial" />
                 <h3 className="font-semibold text-lg">Beneficial Practices</h3>
               </div>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
+              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card flex-1">
                 <img 
                   src={correlationBeneficial} 
                   alt="Correlation heatmap for beneficial social media practices" 
-                  className="w-full h-auto"
+                  className="w-full h-full object-contain"
                 />
               </div>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-4 flex flex-col">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-harmful" />
                 <h3 className="font-semibold text-lg">Harmful Practices</h3>
               </div>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
+              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card flex-1">
                 <img 
                   src={correlationHarmful} 
                   alt="Correlation heatmap for harmful social media practices" 
-                  className="w-full h-auto"
+                  className="w-full h-full object-contain"
                 />
               </div>
             </div>
