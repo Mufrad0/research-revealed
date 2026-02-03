@@ -182,7 +182,7 @@ const Index = () => {
                 <StatCard value={24} label="Years of Data" icon={TrendingUp} />
               </StaggerItem>
               <StaggerItem>
-                <StatCard value={7} label="DSP Variables" icon={BarChart3} />
+                <StatCard value={7} label="Digital Society Project Variables" icon={BarChart3} />
               </StaggerItem>
               <StaggerItem>
                 <StatCard value={5} label="Democracy Indices" icon={AlertTriangle} />
@@ -332,10 +332,10 @@ const Index = () => {
               Interactive Comparison
             </p>
             <h2 className="font-serif text-3xl lg:text-4xl font-bold mb-4">
-              Compare DSP variables between any two countries
+              Compare Digital Society Project (DSP) variables between any two countries
             </h2>
             <p className="text-lg text-muted-foreground">
-              Select two countries and years to compare their Digital Society Project profiles.
+              Select two countries and years to compare their DSP profiles.
               Each axis shows the normalized value (0-100%) for that variable.
             </p>
           </AnimatedSection>
