@@ -208,13 +208,13 @@ const Index = () => {
         and negative phenomena (disinformation, polarization) are increasing simultaneously."
         linkTo="/global-trends"
       >
-        <div className="image-reveal rounded-xl overflow-hidden shadow-lg border bg-card">
+        <Link to="/global-trends" className="block image-reveal rounded-xl overflow-hidden shadow-lg border bg-card cursor-pointer">
           <img 
             src={internetTimeSeries} 
             alt="Internet Time Series showing global trends from 2000-2024" 
             className="w-full h-auto"
           />
-        </div>
+        </Link>
       </VisualizationSection>
 
       {/* Correlation Analysis Section */}
@@ -241,26 +241,26 @@ const Index = () => {
                 <div className="w-3 h-3 rounded-full bg-beneficial animate-pulse" />
                 <h3 className="font-semibold text-lg">Beneficial Practices</h3>
               </div>
-              <div className="image-reveal rounded-xl overflow-hidden shadow-lg border bg-card flex-1">
+              <Link to="/correlation" className="block image-reveal rounded-xl overflow-hidden shadow-lg border bg-card flex-1 cursor-pointer">
                 <img 
                   src={correlationBeneficial} 
                   alt="Correlation heatmap for beneficial social media practices" 
                   className="w-full h-full object-contain"
                 />
-              </div>
+              </Link>
             </StaggerItem>
             <StaggerItem className="space-y-4 flex flex-col">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-harmful animate-pulse" />
                 <h3 className="font-semibold text-lg">Harmful Practices</h3>
               </div>
-              <div className="image-reveal rounded-xl overflow-hidden shadow-lg border bg-card flex-1">
+              <Link to="/correlation" className="block image-reveal rounded-xl overflow-hidden shadow-lg border bg-card flex-1 cursor-pointer">
                 <img 
                   src={correlationHarmful} 
                   alt="Correlation heatmap for harmful social media practices" 
                   className="w-full h-full object-contain"
                 />
-              </div>
+              </Link>
             </StaggerItem>
           </StaggerContainer>
           <AnimatedSection delay={0.3} className="text-center mt-8">
@@ -285,13 +285,13 @@ const Index = () => {
         linkTo="/country-comparison"
         reverse
       >
-        <div className="image-reveal rounded-xl overflow-hidden shadow-2xl border bg-card">
+        <Link to="/country-comparison" className="block image-reveal rounded-xl overflow-hidden shadow-2xl border bg-card cursor-pointer">
           <img 
             src={ddiVenezuelaUS} 
             alt="DDI comparison between Venezuela and USA over time" 
             className="w-full h-auto"
           />
-        </div>
+        </Link>
       </VisualizationSection>
 
       {/* Expert Disagreement Over Time Section */}
@@ -304,13 +304,13 @@ const Index = () => {
         linkTo="/expert-uncertainty"
         linkLabel="Explore Data Reliability"
       >
-        <div className="image-reveal rounded-xl overflow-hidden shadow-2xl border bg-card">
+        <Link to="/expert-uncertainty" className="block image-reveal rounded-xl overflow-hidden shadow-2xl border bg-card cursor-pointer">
           <img 
             src={expertDisagreement} 
             alt="Expert disagreement trends for internet-related variables" 
             className="w-full h-auto"
           />
-        </div>
+        </Link>
       </VisualizationSection>
 
       {/* Top 15 Uncertain Countries Section */}
@@ -324,13 +324,13 @@ const Index = () => {
         linkLabel="View Full Analysis"
         reverse
       >
-        <div className="image-reveal rounded-xl overflow-hidden shadow-2xl border bg-card">
+        <Link to="/expert-uncertainty" className="block image-reveal rounded-xl overflow-hidden shadow-2xl border bg-card cursor-pointer">
           <img 
             src={topUncertain} 
             alt="Top 15 countries with highest expert uncertainty" 
             className="w-full h-auto"
           />
-        </div>
+        </Link>
       </VisualizationSection>
 
       {/* Interactive Radar Chart Section */}
