@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   RadarChart,
   PolarGrid,
@@ -48,6 +49,7 @@ function calculatePercentile(ediValue: number, allEDIValues: number[]): number {
 }
 
 export function RadarChartComparison() {
+  const isMobile = useIsMobile();
   const [dataset, setDataset] = useState<DspDataset | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
 
@@ -168,14 +170,14 @@ export function RadarChartComparison() {
       ) : null}
 
       {/* Country Selectors */}
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
         {/* Country 1 Selector */}
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-3">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-chart-blue" />
-            <span className="font-semibold">Country 1</span>
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-chart-blue" />
+            <span className="font-semibold text-sm sm:text-base">Country 1</span>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-[1fr,auto] gap-2 sm:gap-3">
             <CountryCombobox
               value={country1}
               onValueChange={handleCountry1Change}
@@ -188,7 +190,7 @@ export function RadarChartComparison() {
               onValueChange={(v) => setYear1(parseInt(v))}
               disabled={!dataset || !years1.length}
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-[80px] sm:w-[100px]">
                 <SelectValue placeholder="Year" />
               </SelectTrigger>
               <SelectContent>
@@ -201,12 +203,12 @@ export function RadarChartComparison() {
         </div>
 
         {/* Country 2 Selector */}
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-3">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-chart-magenta" />
-            <span className="font-semibold">Country 2</span>
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-chart-magenta" />
+            <span className="font-semibold text-sm sm:text-base">Country 2</span>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-[1fr,auto] gap-2 sm:gap-3">
             <CountryCombobox
               value={country2}
               onValueChange={handleCountry2Change}
@@ -219,7 +221,7 @@ export function RadarChartComparison() {
               onValueChange={(v) => setYear2(parseInt(v))}
               disabled={!dataset || !years2.length}
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-[80px] sm:w-[100px]">
                 <SelectValue placeholder="Year" />
               </SelectTrigger>
               <SelectContent>
@@ -235,23 +237,29 @@ export function RadarChartComparison() {
       {/* Radar Chart and EDI Comparison - matching Streamlit layout */}
       <div className="grid lg:grid-cols-[3fr,1fr] gap-6">
         {/* Radar Chart */}
-        <div className="h-[500px] md:h-[600px]">
-          <h3 className="text-center font-semibold mb-4">DSP Variables Comparison</h3>
+        <div className="h-[350px] sm:h-[450px] md:h-[550px] lg:h-[600px]">
+          <h3 className="text-center font-semibold mb-4 text-sm sm:text-base">DSP Variables Comparison</h3>
           <ResponsiveContainer width="100%" height="100%">
-            <RadarChart data={chartData} margin={{ top: 60, right: 120, bottom: 60, left: 120 }}>
+            <RadarChart 
+              data={chartData} 
+              margin={isMobile 
+                ? { top: 30, right: 40, bottom: 30, left: 40 }
+                : { top: 60, right: 120, bottom: 60, left: 120 }
+              }
+            >
               <PolarGrid stroke="hsl(var(--border))" />
               <PolarAngleAxis 
                 dataKey="variable" 
                 tick={{ 
                   fill: "hsl(var(--foreground))", 
-                  fontSize: 10,
+                  fontSize: isMobile ? 7 : 10,
                 }}
                 tickLine={false}
               />
               <PolarRadiusAxis 
                 angle={90} 
                 domain={[0, 1]} 
-                tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 9 }}
+                tick={{ fill: "hsl(var(--muted-foreground))", fontSize: isMobile ? 7 : 9 }}
                 // Recharts' TS types are stricter than runtime here; numbers are valid tick values.
                 ticks={RADIAL_TICKS as unknown as any[]}
                 tickLine={false}
@@ -287,7 +295,7 @@ export function RadarChartComparison() {
               <Legend 
                 verticalAlign="top" 
                 align="center"
-                wrapperStyle={{ paddingBottom: 20 }}
+                wrapperStyle={{ paddingBottom: isMobile ? 10 : 20, fontSize: isMobile ? 11 : 14 }}
               />
             </RadarChart>
           </ResponsiveContainer>
