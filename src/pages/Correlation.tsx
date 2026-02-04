@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { Card, CardContent } from "@/components/ui/card";
+import { AnimatedSection } from "@/components/AnimatedSection";
 import correlationBeneficial from "@/assets/correlation_heatmap_beneficial.png";
 import correlationHarmful from "@/assets/correlation_heatmap_harmful.png";
 
@@ -14,150 +15,154 @@ export default function Correlation() {
               Statistical Analysis
             </p>
             <h1 className="font-serif text-4xl lg:text-5xl font-bold mb-6">
-              Correlation Analysis
+              Correlation Heatmaps
             </h1>
             <p className="text-xl text-muted-foreground">
-              How strongly do different digital society practices correlate with various 
-              dimensions of democracy? Our correlation analysis reveals clear patterns 
-              distinguishing beneficial from harmful practices.
+              Having observed that both beneficial and harmful practices have increased over time, we need to understand how they relate to different aspects of democracy.
             </p>
           </div>
         </div>
       </section>
 
+      {/* Visualisation Choice */}
+      <section className="py-12">
+        <div className="container">
+          <AnimatedSection className="max-w-3xl mx-auto">
+            <Card className="border-l-4 border-l-accent">
+              <CardContent className="p-6">
+                <h3 className="font-serif text-xl font-bold mb-3">Visualisation Choice</h3>
+                <p className="text-muted-foreground">
+                  Below we plotted both the "Beneficial" and "Harmful" variables in a correlation matrix heatmap. This enabled us to convey dense information about multiple correlations in a visually digestible manner. The correlations shown are the <strong className="text-foreground">median correlation coefficient (scale of -1 to 1)</strong> between the variables across years 2000-2019. We chose to only plot correlations up to 2019 to avoid issues with measurement uncertainty (see the expert disagreement tab).
+                </p>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* Main Visualizations */}
-      <section className="py-16">
+      <section className="py-12">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-beneficial" />
-                <h3 className="font-serif text-xl font-bold">Beneficial Practices</h3>
+            <AnimatedSection>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-beneficial" />
+                  <h3 className="font-serif text-xl font-bold">Beneficial Practices</h3>
+                </div>
+                <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
+                  <img 
+                    src={correlationBeneficial} 
+                    alt="Correlation heatmap for beneficial social media practices" 
+                    className="w-full h-auto"
+                  />
+                </div>
               </div>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
-                <img 
-                  src={correlationBeneficial} 
-                  alt="Correlation heatmap for beneficial social media practices" 
-                  className="w-full h-auto"
-                />
+            </AnimatedSection>
+            <AnimatedSection delay={0.1}>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-harmful" />
+                  <h3 className="font-serif text-xl font-bold">Harmful Practices</h3>
+                </div>
+                <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
+                  <img 
+                    src={correlationHarmful} 
+                    alt="Correlation heatmap for harmful social media practices" 
+                    className="w-full h-auto"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-harmful" />
-                <h3 className="font-serif text-xl font-bold">Harmful Practices</h3>
-              </div>
-              <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
-                <img 
-                  src={correlationHarmful} 
-                  alt="Correlation heatmap for harmful social media practices" 
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
 
-      {/* Key Findings */}
+      {/* Findings */}
       <section className="py-16 bg-secondary/30">
         <div className="container">
-          <h2 className="font-serif text-3xl font-bold mb-8 text-center">Key Findings</h2>
+          <AnimatedSection>
+            <h2 className="font-serif text-3xl font-bold mb-8">Findings</h2>
+          </AnimatedSection>
           
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <Card className="border-2 border-beneficial/30">
-              <CardContent className="p-6">
-                <h3 className="font-serif text-xl font-bold mb-4 flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-beneficial" />
-                  Strongest Positive Correlations
-                </h3>
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex justify-between">
-                    <span><strong className="text-foreground">Online Media Perspectives (OMP)</strong></span>
-                    <span className="font-mono text-beneficial">+0.72</span>
-                  </li>
-                  <li className="text-sm">
-                    Countries with higher democracy scores tend to have more diverse viewpoints 
-                    in their online media ecosystem.
-                  </li>
-                  <li className="flex justify-between pt-2">
-                    <span><strong className="text-foreground">Political Communication (PEC)</strong></span>
-                    <span className="font-mono text-beneficial">+0.58</span>
-                  </li>
-                  <li className="text-sm">
-                    Democratic countries make greater use of digital channels for political 
-                    and electoral communication.
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="border-2 border-harmful/30">
-              <CardContent className="p-6">
-                <h3 className="font-serif text-xl font-bold mb-4 flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-harmful" />
-                  Strongest Negative Correlations
-                </h3>
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex justify-between">
-                    <span><strong className="text-foreground">Government Disinformation (GD)</strong></span>
-                    <span className="font-mono text-harmful">-0.67</span>
-                  </li>
-                  <li className="text-sm">
-                    Less democratic governments are significantly more likely to disseminate 
-                    disinformation to their citizens.
-                  </li>
-                  <li className="flex justify-between pt-2">
-                    <span><strong className="text-foreground">Party Disinformation (PD)</strong></span>
-                    <span className="font-mono text-harmful">-0.54</span>
-                  </li>
-                  <li className="text-sm">
-                    Political parties in less democratic countries more frequently spread 
-                    false information.
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Interpretation */}
-      <section className="py-16">
-        <div className="container">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="font-serif text-3xl font-bold mb-6">Interpretation</h2>
-            <div className="space-y-6 text-muted-foreground">
-              <p>
-                The correlation patterns reveal a clear divide: <strong className="text-foreground">
-                beneficial digital practices are positively associated with democracy</strong>, 
-                while <strong className="text-foreground">harmful practices show negative 
-                correlations</strong>.
-              </p>
-              <p>
-                Notably, the <strong className="text-foreground">Deliberative Democracy Index (DDI)</strong> 
-                shows some of the strongest correlations in both directions. This suggests that 
-                the quality of public deliberation is particularly sensitive to digital society 
-                practices—disinformation undermines deliberation, while diverse perspectives enhance it.
-              </p>
-              <p>
-                The <strong className="text-foreground">Liberal Democracy Index (LDI)</strong> also 
-                shows strong patterns, indicating that individual liberties and rule of law are 
-                associated with healthier digital ecosystems.
-              </p>
-              <Card className="mt-8 bg-accent/5 border-accent/20">
+          <div className="max-w-4xl mx-auto space-y-8">
+            <AnimatedSection>
+              <Card className="border-l-4 border-l-beneficial">
                 <CardContent className="p-6">
-                  <h3 className="font-semibold mb-2">⚠️ Correlation vs. Causation</h3>
-                  <p className="text-sm">
-                    These correlations do not establish causality. It's possible that democracy 
-                    enables beneficial practices, that beneficial practices strengthen democracy, 
-                    or that both are caused by underlying factors like economic development or 
-                    education levels.
+                  <h3 className="font-serif text-xl font-bold mb-3">Beneficial Practices</h3>
+                  <p className="text-muted-foreground">
+                    <strong className="text-foreground">Online Media Perspectives</strong> shows consistently moderate positive correlations across all five democracy dimensions, while <strong className="text-foreground">Consumption</strong> and <strong className="text-foreground">Political Communication</strong> show weak or negligible associations.
                   </p>
                 </CardContent>
               </Card>
-            </div>
+            </AnimatedSection>
+
+            <AnimatedSection delay={0.1}>
+              <Card className="border-l-4 border-l-harmful">
+                <CardContent className="p-6">
+                  <h3 className="font-serif text-xl font-bold mb-3">Harmful Practices</h3>
+                  <p className="text-muted-foreground">
+                    The pattern is more striking: <strong className="text-foreground">Government Disinformation</strong> shows strong negative correlations across all democracy dimensions, with Deliberative Democracy displaying the strongest negative association. <strong className="text-foreground">Party Disinformation</strong> shows moderate to strong negative correlations, again with Deliberative Democracy showing the strongest pattern. <strong className="text-foreground">Online Media Fractionalization</strong> and <strong className="text-foreground">Social Media Violence</strong> show weaker negative associations overall, perhaps because of the fine line between diverse perspectives and polarisation.
+                  </p>
+                </CardContent>
+              </Card>
+            </AnimatedSection>
+
+            <AnimatedSection delay={0.2}>
+              <Card className="border-2 border-accent/30 bg-accent/5">
+                <CardContent className="p-6">
+                  <h3 className="font-serif text-xl font-bold mb-3">Deliberative Democracy Most Vulnerable</h3>
+                  <p className="text-muted-foreground">
+                    Generally speaking, the different dimensions of democracy are correlated with the internet measures in similar ways to each other. However, <strong className="text-foreground">Deliberative Democracy</strong>, the dimension concerned with reasoned public discourse and engaged deliberation, shows the strongest negative associations with all the harmful variables, implying it might be the dimension most vulnerable to bad internet practices.
+                  </p>
+                </CardContent>
+              </Card>
+            </AnimatedSection>
+
+            <AnimatedSection delay={0.3}>
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="font-serif text-xl font-bold mb-3">Government vs Party Disinformation</h3>
+                  <p className="text-muted-foreground">
+                    In line with Hunter (2023)'s findings, <strong className="text-foreground">government disinformation</strong> seems to be more negatively associated with all dimensions of democracy than party disinformation. This may be because governments appear more legitimate than political parties, and so their disinformation is more impactful. However, we could also have a story of a reverse relationship: governments who are less democratic spread more disinformation.
+                  </p>
+                </CardContent>
+              </Card>
+            </AnimatedSection>
           </div>
+        </div>
+      </section>
+
+      {/* Transition Question */}
+      <section className="py-16">
+        <div className="container">
+          <AnimatedSection className="max-w-3xl mx-auto text-center">
+            <Card className="border-2 border-accent/30">
+              <CardContent className="p-8">
+                <p className="text-lg text-foreground leading-relaxed">
+                  But how have these aggregate correlations, with the DDI's vulnerability and the greater negative correlation of GD over PD, played out in actual country trajectories?
+                </p>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Correlation Note */}
+      <section className="py-12 bg-secondary/30">
+        <div className="container">
+          <AnimatedSection className="max-w-3xl mx-auto">
+            <Card className="bg-accent/5 border-accent/20">
+              <CardContent className="p-6">
+                <h3 className="font-semibold mb-2">⚠️ Correlation vs. Causation</h3>
+                <p className="text-sm text-muted-foreground">
+                  These correlations do not establish causality. It's possible that democracy 
+                  enables beneficial practices, that beneficial practices strengthen democracy, 
+                  or that both are caused by underlying factors such as authoritarian consolidation.
+                </p>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
         </div>
       </section>
     </Layout>

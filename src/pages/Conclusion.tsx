@@ -21,8 +21,8 @@ const keyFindings = [
   },
   {
     icon: MapPin,
-    title: "Geographic Patterns of Uncertainty",
-    description: "Expert disagreement about social media environments has risen sharply since 2020, with the highest uncertainty concentrated in closed autocracies (North Korea, Cuba, Turkmenistan) and small stable democracies (Iceland, Luxembourg, Denmark)."
+    title: "Rising Expert Disagreement",
+    description: "Expert disagreement about social media environments has risen sharply since 2020 across all seven variables we examined, with the highest uncertainty concentrated in closed autocracies (North Korea, Cuba, Turkmenistan) and small stable democracies (Iceland, Luxembourg, Denmark)."
   }
 ];
 
@@ -37,8 +37,9 @@ const futureResearch = [
   {
     title: "Varieties of Democracy and the Internet",
     points: [
-      "If researchers added controls for more causal interpretations, would Hunter's typology of 'beneficial' vs 'harmful' variables still hold across different dimensions?",
-      "Why is deliberative democracy the most vulnerable dimension, and how can it be protected?"
+      "We found that the 'beneficial variables' often had slightly negative associations across most of the democratic dimensions. However, if researchers added controls to facilitate more causal interpretations, how would these correlations change?",
+      "Would Hunter's typology of 'beneficial' vs 'harmful' variables still hold across the different dimensions?",
+      "We also found that the deliberative democracy dimension was the most vulnerable in terms of its correlations with harmful variables. This warrants further investigation to understand: (1) if this is still the case when controls are added, (2) why deliberative democracy is the most vulnerable dimension, and (3) how can deliberative democracy be protected."
     ]
   },
   {
@@ -53,15 +54,15 @@ const futureResearch = [
 const limitations = [
   {
     title: "Expert Coding Limitations",
-    content: "Both V-Dem and DSP rely on expert coding rather than direct observation. As Fletcher and Hayes-Birchler (2023) demonstrate, expert analysis methods can be prone to both false positives and challenges with verifiability. Experts assessing 'government disinformation' or 'deliberative democracy' may be influenced by broader perceptions of regime type, potentially inflating correlations."
+    content: "Both V-Dem and DSP rely on expert coding rather than direct observation of internet and democracy phenomena. As Fletcher and Hayes-Birchler (2023) demonstrate, expert analysis methods can be prone to both false positives (identifying censorship that did not occur) and challenges with verifiability compared to remote measurement approaches. Expert coders may conflate different types of phenomena. Fletcher and Hayes-Birchler (2023) found that V-Dem uniquely identified censorship in many cases where other datasets did not, suggesting either that V-Dem captures censorship other methods miss, or that expert analysis includes false positives. Applied to our context, experts assessing 'government disinformation' or 'deliberative democracy' may be influenced by broader perceptions of regime type or civil liberties rather than measuring the specific phenomena in question. This could inflate correlations between internet variables and democracy measures if experts use similar cognitive frameworks to assess both."
   },
   {
     title: "Correlational Analysis Only",
-    content: "Our analysis is purely correlational and descriptive and cannot establish causal relationships. The negative correlation between government disinformation and deliberative democracy could reflect disinformation causing decline, declining democracy enabling disinformation, or both being driven by a common factor such as authoritarian consolidation."
+    content: "Our analysis is purely correlational and descriptive and cannot establish causal relationships. The negative correlation between government disinformation and deliberative democracy could reflect: (1) government disinformation causing deliberative decline, as Hunter's theory suggests; (2) declining deliberative democracy enabling governments to spread more disinformation with less pushback; or (3) both variables being driven by a common factor such as authoritarian consolidation."
   },
   {
     title: "Temporal Scope Limitations",
-    content: "Our 25-year temporal scope (2000-2024) may mask important non-linear relationships. The internet landscape transformed dramatically after 2010-2015, and expert disagreement surged post-2020, suggesting measurement properties themselves are non-stationary. Future research might employ time-varying coefficient models."
+    content: "Our 25-year temporal scope (2000-2024) may mask important non-linear relationships. Hunter (2023) pooled data across 2000-2019 assuming stable relationships, but our global trends visualisation shows the internet landscape transformed dramatically after 2010-2015. The correlation between internet variables and democracy dimensions calculated across the full 25-year period may not reflect current dynamics. Similarly, our expert uncertainty visualisation shows expert disagreement was relatively stable pre-2020 but surged post-2020, suggesting measurement properties themselves are non-stationary. Future research might employ time-varying coefficient models or conduct separate analyses for distinct periods to capture these shifts."
   }
 ];
 
@@ -79,9 +80,7 @@ export default function Conclusion() {
               Conclusion
             </h1>
             <p className="text-xl text-muted-foreground">
-              This project extends Hunter (2023)'s analysis in two key directions: examining temporal 
-              evolution of internet practices over 25 years, and disaggregating democratic quality 
-              into its five constituent dimensions.
+              This project extends Hunter (2023)'s analysis of social media and democracy in two key directions: examining temporal evolution of internet practices over 25 years, and disaggregating democratic quality into its five constituent dimensions.
             </p>
           </div>
         </div>

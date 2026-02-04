@@ -419,16 +419,20 @@ export default function Methodology() {
                 <strong className="text-foreground">Correlation method:</strong> We use Pearson 
                 correlation coefficients to measure the strength and direction of relationships 
                 between DSP variables and democracy indices. The correlations shown are the median 
-                correlation coefficient (scale of -1 to 1) between variables across all years.
+                correlation coefficient (scale of -1 to 1) between variables across years 2000-2019. 
+                We chose to only plot correlations up to 2019 to avoid issues with measurement 
+                uncertainty (see the Expert Uncertainty tab).
               </p>
               <p>
                 <strong className="text-foreground">Data pooling:</strong> We pooled data across 
-                all years to follow Hunter (2023)'s methodology and maximize statistical power.
+                the 2000-2019 period to follow Hunter (2023)'s methodology and maximize statistical power.
               </p>
               <p>
                 <strong className="text-foreground">Uncertainty handling:</strong> V-Dem provides 
                 expert disagreement metrics (standard deviations), which we analyze separately 
-                to understand data reliability across countries and variables.
+                to understand data reliability across countries and variables. For each of the 
+                democracy indices and DSP variables, we also kept their standard deviations to 
+                visualise expert disagreement.
               </p>
             </div>
           </AnimatedSection>
