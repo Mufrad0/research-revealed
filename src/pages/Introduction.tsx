@@ -166,7 +166,7 @@ export default function Introduction() {
                 <CardContent className="p-8">
                   <h3 className="font-serif text-xl font-bold mb-4">Temporal Trends Analysis</h3>
                   <p className="text-muted-foreground">
-                    We explore how measures of beneficial and harmful internet practices have evolved over time, as well as how expert assessment of social media environments has changed in terms of consensus and disagreement.
+                    First, we explore temporal trends in internet and democracy measures. We investigate how measures of beneficial and harmful internet practices have evolved over time, as well as how expert assessment of social media environments has changed in terms of consensus and disagreement.
                   </p>
                 </CardContent>
               </Card>
@@ -176,7 +176,7 @@ export default function Introduction() {
                 <CardContent className="p-8">
                   <h3 className="font-serif text-xl font-bold mb-4">Disaggregating Democracy</h3>
                   <p className="text-muted-foreground">
-                    We disaggregate democratic quality into its five constituent dimensions based on V-Dem's typology: <strong className="text-foreground">Electoral, Liberal, Participatory, Egalitarian, and Deliberative Democracy</strong>.
+                    Second, we disaggregate democratic quality into its five constituent dimensions based on V-Dem's typology: <strong className="text-foreground">Electoral, Liberal, Participatory, Egalitarian, and Deliberative Democracy</strong>. While Hunter (2023) examined causal relationships between seven key internet metrics and Electoral Democracy, we explore whether different democracy dimensions show varying associations with social media practices.
                   </p>
                 </CardContent>
               </Card>
@@ -190,9 +190,6 @@ export default function Introduction() {
         <div className="container">
           <AnimatedSection className="max-w-4xl mx-auto">
             <div className="prose prose-lg max-w-none text-muted-foreground space-y-6">
-              <p>
-                While Hunter (2023) examined causal relationships between seven key internet metrics and Electoral Democracy, we explore whether different democracy dimensions show varying associations with social media practices.
-              </p>
               <Card className="border-2 border-accent/30 bg-accent/5 my-8">
                 <CardContent className="p-6">
                   <p className="text-foreground font-medium text-lg leading-relaxed">
@@ -201,7 +198,7 @@ export default function Introduction() {
                 </CardContent>
               </Card>
               <p>
-                By making these patterns across 179 countries and 25 years visible through data visualization, we aim to identify intriguing avenues for further research by scholars building on Hunter (2023)'s work.
+                By making these patterns across 179 countries and 25 years visible through data visualization, we aim to identify intriguing avenues for further research by scholars building on Hunter (2023)'s work. Explore the visualizations below to see how this complex relationship unfolds across time and space.
               </p>
             </div>
           </AnimatedSection>
