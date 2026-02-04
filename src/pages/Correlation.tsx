@@ -27,7 +27,7 @@ export default function Correlation() {
       {/* Motivation */}
       <section className="py-12">
         <div className="container">
-          <AnimatedSection className="max-w-3xl mx-auto">
+          <AnimatedSection className="max-w-4xl mx-auto">
             <Card className="border-l-4 border-l-accent">
               <CardContent className="p-6">
                 <h3 className="font-serif text-xl font-bold mb-3">Motivation</h3>
