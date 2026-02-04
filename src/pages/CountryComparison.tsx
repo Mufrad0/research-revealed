@@ -31,7 +31,7 @@ export default function CountryComparison() {
               <CardContent className="p-6">
                 <h3 className="font-serif text-xl font-bold mb-3">Motivation</h3>
                 <p className="text-muted-foreground mb-4">
-                  <strong className="text-foreground">Venezuela</strong> is a developing economy with a history of unstable democracy. The disputed July 2024 presidential election—marked by widespread disinformation campaigns, blocked election monitors, and intensified censorship—highlighted how Venezuela has become a "model for digital authoritarianism."
+                  <strong className="text-foreground">Venezuela</strong> is a developing economy with a history of unstable democracy. The recent US intervention and arrest of Maduro has brought renewed attention to Venezuela's trajectory as a "model for digital authoritarianism"—marked by government disinformation, censorship, and the disputed July 2024 presidential election.
                 </p>
                 <p className="text-muted-foreground mb-4">
                   <strong className="text-foreground">The USA</strong> provides an interesting contrast case, as a country which is more developed with a history of stable democracy, but facing similar challenges with a rise of polarisation and disinformation online, including from the government and political parties.
