@@ -1,35 +1,34 @@
 import { Layout } from "@/components/layout/Layout";
 import { Card, CardContent } from "@/components/ui/card";
-import { Github, Linkedin, Mail } from "lucide-react";
+import jamesPhoto from "@/assets/team/James.jpg";
+import salmaPhoto from "@/assets/team/Salma.jpg";
+import samPhoto from "@/assets/team/Sam.jpg";
+import mufradPhoto from "@/assets/team/Mufrad.jpg";
 
 const teamMembers = [
   {
     name: "James",
     role: "Country Case Study Analysis",
     contribution: "Led the comparative analysis of Venezuela vs USA, examining how deliberative democracy indices correlate with government disinformation over time.",
-    avatar: "J",
-    color: "bg-chart-blue",
+    photo: jamesPhoto,
   },
   {
     name: "Salma",
     role: "Global Trends Analysis",
     contribution: "Developed the time series analysis of internet-related variables globally, revealing the parallel rise of both beneficial and harmful digital society practices.",
-    avatar: "S",
-    color: "bg-chart-orange",
+    photo: salmaPhoto,
   },
   {
     name: "Sam",
     role: "Correlation Analysis",
     contribution: "Conducted the correlation analysis between DSP variables and democracy indices, identifying key relationships between online media perspectives and democratic quality.",
-    avatar: "S",
-    color: "bg-chart-green",
+    photo: samPhoto,
   },
   {
     name: "Mufrad",
     role: "Data Visualization & Interactive Tools",
     contribution: "Created the radar chart comparison tool and coordinated the visual design of the research output, ensuring accessibility with colorblind-friendly palettes.",
-    avatar: "M",
-    color: "bg-chart-magenta",
+    photo: mufradPhoto,
   },
 ];
 
@@ -59,11 +58,15 @@ export default function Team() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {teamMembers.map((member) => (
-              <Card key={member.name} className="overflow-hidden">
+              <Card key={member.name} className="overflow-hidden card-hover">
                 <CardContent className="p-0">
                   <div className="flex items-center gap-4 p-6 border-b">
-                    <div className={`w-16 h-16 rounded-full ${member.color} flex items-center justify-center text-2xl font-bold text-white`}>
-                      {member.avatar}
+                    <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-border flex-shrink-0">
+                      <img 
+                        src={member.photo} 
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div>
                       <h3 className="font-serif text-xl font-bold">{member.name}</h3>
