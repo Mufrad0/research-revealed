@@ -97,7 +97,7 @@ export default function GlobalTrends() {
                   <CardContent className="p-6">
                     <h3 className="font-serif text-xl font-bold mb-3">Ambivalent Effects</h3>
                     <p className="text-muted-foreground">
-                      These temporal findings would suggest an ambivalent effect on democracy, if we are following Hunter (2023)'s hypothesis. However, Hunter (2023) only explored the relationship between these variables and Electoral democracy. Perhaps, then, we can tell a more nuanced story if we observe the association between these variables and the different dimensions of democracy.
+                      These temporal findings would suggest an ambivalent effect on democracy, if we are following Hunter (2023)'s hypothesis. However, Hunter (2023) only explored the relationship between these variables and Electoral democracy. Perhaps, then, we can tell a more nuanced story if we observe the correlation between these variables and the different dimensions of democracy.
                     </p>
                   </CardContent>
                 </Card>
