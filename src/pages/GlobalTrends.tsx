@@ -125,9 +125,9 @@ export default function GlobalTrends() {
             <h2 className="font-serif text-3xl font-bold mb-8 text-center">Notable Time Periods</h2>
           </AnimatedSection>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <AnimatedSection>
-              <Card>
-                <CardContent className="p-6 text-center">
+            <AnimatedSection className="h-full">
+              <Card className="h-full">
+                <CardContent className="p-6 text-center h-full flex flex-col justify-center">
                   <p className="text-3xl font-bold text-accent mb-2">2000-2010</p>
                   <h3 className="font-semibold mb-2">Early Internet Era</h3>
                   <p className="text-sm text-muted-foreground">
@@ -136,9 +136,9 @@ export default function GlobalTrends() {
                 </CardContent>
               </Card>
             </AnimatedSection>
-            <AnimatedSection delay={0.1}>
-              <Card>
-                <CardContent className="p-6 text-center">
+            <AnimatedSection delay={0.1} className="h-full">
+              <Card className="h-full">
+                <CardContent className="p-6 text-center h-full flex flex-col justify-center">
                   <p className="text-3xl font-bold text-accent mb-2">2010-2020</p>
                   <h3 className="font-semibold mb-2">Social Media Era</h3>
                   <p className="text-sm text-muted-foreground">
@@ -147,9 +147,9 @@ export default function GlobalTrends() {
                 </CardContent>
               </Card>
             </AnimatedSection>
-            <AnimatedSection delay={0.2}>
-              <Card>
-                <CardContent className="p-6 text-center">
+            <AnimatedSection delay={0.2} className="h-full">
+              <Card className="h-full">
+                <CardContent className="p-6 text-center h-full flex flex-col justify-center">
                   <p className="text-3xl font-bold text-accent mb-2">2020-2024</p>
                   <h3 className="font-semibold mb-2">Post-Pandemic Era</h3>
                   <p className="text-sm text-muted-foreground">
