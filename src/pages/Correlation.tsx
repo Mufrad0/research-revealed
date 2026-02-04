@@ -18,21 +18,24 @@ export default function Correlation() {
               Correlation Heatmaps
             </h1>
             <p className="text-xl text-muted-foreground">
-              Having observed that both beneficial and harmful practices have increased over time, we need to understand how they relate to different aspects of democracy.
+              Understanding the relationship between internet practices and democratic health.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Visualisation Choice */}
+      {/* Motivation */}
       <section className="py-12">
         <div className="container">
           <AnimatedSection className="max-w-3xl mx-auto">
             <Card className="border-l-4 border-l-accent">
               <CardContent className="p-6">
-                <h3 className="font-serif text-xl font-bold mb-3">Visualisation Choice</h3>
+                <h3 className="font-serif text-xl font-bold mb-3">Motivation</h3>
+                <p className="text-muted-foreground mb-4">
+                  Having observed that both beneficial and harmful practices have increased over time, we need to understand <strong className="text-foreground">how they relate to different aspects of democracy</strong>.
+                </p>
                 <p className="text-muted-foreground">
-                  Below we plotted both the "Beneficial" and "Harmful" variables in a correlation matrix heatmap. This enabled us to convey dense information about multiple correlations in a visually digestible manner. The correlations shown are the <strong className="text-foreground">median correlation coefficient (scale of -1 to 1)</strong> between the variables across years 2000-2019. We chose to only plot correlations up to 2019 to avoid issues with measurement uncertainty (see the expert disagreement tab).
+                  Do countries with stronger democracies tend to have more beneficial internet practices? Are harmful practices like government disinformation more prevalent in weaker democracies? Understanding these correlations helps us see the broader relationship between digital society and democratic health.
                 </p>
               </CardContent>
             </Card>
@@ -43,6 +46,11 @@ export default function Correlation() {
       {/* Main Visualizations */}
       <section className="py-12">
         <div className="container">
+          <h2 className="font-serif text-2xl font-bold mb-2">Visualisation 3: Correlation Heatmaps</h2>
+          <p className="text-muted-foreground mb-8">
+            <strong className="text-foreground">Visualisation Choice:</strong> Correlation matrix heatmaps convey dense information about multiple correlations in a visually digestible manner. The correlations shown are the <strong className="text-foreground">median correlation coefficient (scale of -1 to 1)</strong> between variables across years 2000-2019. We chose to only plot correlations up to 2019 to avoid issues with measurement uncertainty (see the expert disagreement tab).
+          </p>
+          
           <div className="grid lg:grid-cols-2 gap-8">
             <AnimatedSection>
               <div className="space-y-4">
@@ -50,11 +58,11 @@ export default function Correlation() {
                   <div className="w-3 h-3 rounded-full bg-beneficial" />
                   <h3 className="font-serif text-xl font-bold">Beneficial Practices</h3>
                 </div>
-                <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
+                <div className="rounded-xl overflow-hidden shadow-2xl border bg-card aspect-square">
                   <img 
                     src={correlationBeneficial} 
                     alt="Correlation heatmap for beneficial social media practices" 
-                    className="w-full h-auto"
+                    className="w-full h-full object-contain"
                   />
                 </div>
               </div>
@@ -65,11 +73,11 @@ export default function Correlation() {
                   <div className="w-3 h-3 rounded-full bg-harmful" />
                   <h3 className="font-serif text-xl font-bold">Harmful Practices</h3>
                 </div>
-                <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
+                <div className="rounded-xl overflow-hidden shadow-2xl border bg-card aspect-square">
                   <img 
                     src={correlationHarmful} 
                     alt="Correlation heatmap for harmful social media practices" 
-                    className="w-full h-auto"
+                    className="w-full h-full object-contain"
                   />
                 </div>
               </div>
