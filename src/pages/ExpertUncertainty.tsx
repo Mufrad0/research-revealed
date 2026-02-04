@@ -47,7 +47,7 @@ export default function ExpertUncertainty() {
       <section className="py-12">
         <div className="container">
           <AnimatedSection className="max-w-4xl mx-auto space-y-4">
-            <h2 className="font-serif text-2xl font-bold">Visualisation 4: Expert Disagreement Over Time</h2>
+            <h2 className="font-serif text-2xl font-bold">Visualisation 5: Expert Disagreement Over Time</h2>
             <p className="text-muted-foreground">
               <strong className="text-foreground">Visualisation Choice:</strong> Line charts effectively show how measurement uncertainty (standard deviations) has changed over the 25-year period.
             </p>
@@ -88,7 +88,7 @@ export default function ExpertUncertainty() {
       <section className="py-12">
         <div className="container">
           <AnimatedSection className="max-w-4xl mx-auto space-y-4">
-            <h2 className="font-serif text-2xl font-bold">Visualisation 5: Top 15 Countries with Highest Measurement Uncertainty</h2>
+            <h2 className="font-serif text-2xl font-bold">Visualisation 6: Top 15 Countries with Highest Measurement Uncertainty</h2>
             <Card className="border-l-4 border-l-accent mb-6">
               <CardContent className="p-6">
                 <h3 className="font-serif text-lg font-bold mb-2">Motivation</h3>
