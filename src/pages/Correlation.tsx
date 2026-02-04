@@ -46,7 +46,7 @@ export default function Correlation() {
       {/* Main Visualizations */}
       <section className="py-12">
         <div className="container">
-          <h2 className="font-serif text-2xl font-bold mb-2">Visualisation 3: Correlation Heatmaps</h2>
+          <h2 className="font-serif text-2xl font-bold mb-2">Visualisation 2 & 3: Correlation Heatmaps</h2>
           <p className="text-muted-foreground mb-8">
             <strong className="text-foreground">Visualisation Choice:</strong> Correlation matrix heatmaps convey dense information about multiple correlations in a visually digestible manner. The correlations shown are the <strong className="text-foreground">median correlation coefficient (scale of -1 to 1)</strong> between variables across years 2000-2019. We chose to only plot correlations up to 2019 to avoid issues with measurement uncertainty (see the expert disagreement tab).
           </p>
