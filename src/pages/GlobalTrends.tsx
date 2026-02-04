@@ -43,9 +43,9 @@ export default function GlobalTrends() {
       <section className="py-12">
         <div className="container">
           <AnimatedSection className="max-w-5xl mx-auto space-y-4">
-            <h3 className="font-serif text-2xl font-bold">Visualisation Choice</h3>
+            <h2 className="font-serif text-2xl font-bold">Visualisation 1: Internet Practices Over Time</h2>
             <p className="text-muted-foreground max-w-3xl">
-              We selected line charts to display temporal trends because they effectively show how multiple variables evolve over the same time period, making it easy to compare trajectories and identify inflection points. The split panel design (beneficial vs harmful practices) provides visual clarity by separating conceptually distinct variable groups, while the shared time axis enables direct comparison.
+              <strong className="text-foreground">Visualisation Choice:</strong> We selected line charts to display temporal trends because they effectively show how multiple variables evolve over the same time period, making it easy to compare trajectories and identify inflection points. The split panel design (beneficial vs harmful practices) provides visual clarity by separating conceptually distinct variable groups, while the shared time axis enables direct comparison.
             </p>
             <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
               <img 

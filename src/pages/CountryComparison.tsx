@@ -45,21 +45,15 @@ export default function CountryComparison() {
         </div>
       </section>
 
-      {/* Visualisation Choice */}
-      <section className="py-8">
-        <div className="container">
-          <AnimatedSection className="max-w-3xl mx-auto">
-            <p className="text-muted-foreground">
-              <strong className="text-foreground">Visualisation Choice:</strong> We used multi-panel line charts to display country-specific trajectories because they allow simultaneous comparison of how multiple variables (DDI, GD, PD) track together within each country over time.
-            </p>
-          </AnimatedSection>
-        </div>
-      </section>
-
       {/* Main Visualization */}
       <section className="py-12">
         <div className="container">
-          <AnimatedSection className="max-w-5xl mx-auto">
+          <AnimatedSection className="max-w-5xl mx-auto space-y-4">
+            <h2 className="font-serif text-2xl font-bold">Visualisation 2: Venezuela vs USA Trajectories</h2>
+            <p className="text-muted-foreground">
+              <strong className="text-foreground">Visualisation Choice:</strong> We used multi-panel line charts to display country-specific trajectories because they allow simultaneous comparison of how multiple variables (DDI, GD, PD) track together within each country over time.
+            </p>
+
             <div className="rounded-xl overflow-hidden shadow-2xl border bg-card">
               <img 
                 src={ddiVenezuelaUS} 
