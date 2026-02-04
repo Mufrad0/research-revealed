@@ -5,6 +5,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/AnimatedSection";
+import { RadarChartComparison } from "@/components/RadarChartComparison";
 import { useEffect, useState, useRef } from "react";
 
 // Optimized animated counter hook
@@ -203,6 +204,31 @@ export default function Introduction() {
                 By making these patterns across 179 countries and 25 years visible through data visualization, we aim to identify intriguing avenues for further research by scholars building on Hunter (2023)'s work.
               </p>
             </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Interactive Radar Chart Section */}
+      <section className="py-16 lg:py-24 bg-secondary/30">
+        <div className="container">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12">
+            <p className="text-sm font-medium text-accent uppercase tracking-wider mb-2">
+              Interactive Comparison
+            </p>
+            <h2 className="font-serif text-3xl lg:text-4xl font-bold mb-4">
+              Compare DSP variables between any two countries
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Select two countries and years to compare their Digital Society Project profiles.
+              Each axis shows the normalized value (0-100%) for that variable.
+            </p>
+          </AnimatedSection>
+          <AnimatedSection delay={0.2} className="max-w-5xl mx-auto">
+            <Card className="border bg-card shadow-lg">
+              <CardContent className="p-6 md:p-8">
+                <RadarChartComparison />
+              </CardContent>
+            </Card>
           </AnimatedSection>
         </div>
       </section>
