@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/", label: "Home" },
+  { href: "/", label: "Introduction" },
   { href: "/methodology", label: "Methodology" },
   { href: "/global-trends", label: "Global Trends" },
-  { href: "/correlation", label: "Correlation Analysis" },
+  { href: "/correlation", label: "Correlation" },
   { href: "/country-comparison", label: "Country Comparison" },
   { href: "/expert-uncertainty", label: "Expert Uncertainty" },
+  { href: "/conclusion", label: "Conclusion" },
   { href: "/team", label: "Team" },
 ];
 
