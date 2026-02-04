@@ -20,34 +20,35 @@ export function Header() {
   const location = useLocation();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full bg-background border-b">
       <div className="container flex h-14 items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 group">
-          <span className="text-lg font-bold tracking-tight">
-            <span className="text-foreground">DS105A</span>
-            <span className="text-muted-foreground font-normal ml-1.5 hidden sm:inline">Research</span>
+        <Link to="/" className="flex items-center gap-2 shrink-0">
+          <span className="text-lg font-bold tracking-tight text-foreground">
+            DS105A
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center">
-          <div className="flex items-center bg-secondary/50 rounded-full px-1 py-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                className={cn(
-                  "px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200",
-                  location.pathname === link.href
-                    ? "bg-background text-foreground shadow-sm"
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
+        {/* Desktop Navigation - Tab Style */}
+        <nav className="hidden lg:flex items-center h-full">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              to={link.href}
+              className={cn(
+                "relative h-14 px-4 flex items-center text-sm font-medium transition-colors",
+                location.pathname === link.href
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {link.label}
+              {/* Active indicator line */}
+              {location.pathname === link.href && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent" />
+              )}
+            </Link>
+          ))}
         </nav>
 
         {/* Mobile Menu Button */}
@@ -63,18 +64,18 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <nav className="lg:hidden border-t border-border/40 bg-background/95 backdrop-blur-xl">
-          <div className="container py-4 flex flex-col gap-1">
+        <nav className="lg:hidden border-t bg-background">
+          <div className="container py-3 flex flex-col gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
-                  "px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200",
+                  "px-4 py-3 text-sm font-medium rounded-md transition-colors",
                   location.pathname === link.href
-                    ? "bg-secondary text-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                    ? "bg-accent/10 text-foreground border-l-2 border-accent"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                 )}
               >
                 {link.label}
