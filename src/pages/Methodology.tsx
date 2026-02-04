@@ -434,6 +434,44 @@ export default function Methodology() {
           </AnimatedSection>
         </div>
       </section>
+
+      {/* Bibliography */}
+      <section className="py-16 bg-secondary/30">
+        <div className="container">
+          <AnimatedSection>
+            <h2 className="font-serif text-3xl font-bold mb-8">Bibliography</h2>
+            <div className="max-w-4xl space-y-4 text-sm text-muted-foreground">
+              <p className="pl-8 -indent-8">
+                Azpurua, A. et al. (2024) "How Venezuela became a model for digital authoritarianism," <em>Atlantic Council</em>, 22 July. Available at: <a href="https://www.atlanticcouncil.org/in-depth-research-reports/how-venezuela-became-a-model-for-digital-authoritarianism/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">https://www.atlanticcouncil.org/in-depth-research-reports/how-venezuela-became-a-model-for-digital-authoritarianism/</a> (Accessed: February 4, 2026).
+              </p>
+              <p className="pl-8 -indent-8">
+                Brookings (2022) "Misinformation is eroding the public's confidence in democracy," <em>Brookings</em>. Available at: <a href="https://www.brookings.edu/articles/misinformation-is-eroding-the-publics-confidence-in-democracy/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">https://www.brookings.edu/articles/misinformation-is-eroding-the-publics-confidence-in-democracy/</a> (Accessed: February 4, 2026).
+              </p>
+              <p className="pl-8 -indent-8">
+                Carnegie (2024) <em>Countering Disinformation Effectively: An Evidence-Based Policy Guide</em>, Carnegie Endowment for International Peace. Available at: <a href="https://carnegieendowment.org/research/2024/01/countering-disinformation-effectively-an-evidence-based-policy-guide" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">https://carnegieendowment.org/research/2024/01/countering-disinformation-effectively-an-evidence-based-policy-guide</a> (Accessed: February 4, 2026).
+              </p>
+              <p className="pl-8 -indent-8">
+                Digital Society Project (2025). Available at: <a href="https://digitalsocietyproject.org/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">https://digitalsocietyproject.org/</a> (Accessed: February 4, 2026).
+              </p>
+              <p className="pl-8 -indent-8">
+                Fletcher, T. and Hayes-Birchler, A. (2023) "Is remote measurement a better assessment of internet censorship than expert analysis? Analyzing tradeoffs for international donors and advocacy organizations of current data and methodologies," <em>Data & Policy</em>, 5. Available at: <a href="https://doi.org/10.1017/dap.2023.5" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">https://doi.org/10.1017/dap.2023.5</a>.
+              </p>
+              <p className="pl-8 -indent-8">
+                Hunter, L.Y. (2023) "Social media, disinformation, and democracy: how different types of social media usage affect democracy cross-nationally," <em>Democratization</em>, 30(6), pp. 1040–1072. Available at: <a href="https://doi.org/10.1080/13510347.2023.2208355" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">https://doi.org/10.1080/13510347.2023.2208355</a>.
+              </p>
+              <p className="pl-8 -indent-8">
+                Jahan, I. et al. (2021) "How Has the COVID-19 Pandemic Impacted Internet Use Behaviors and Facilitated Problematic Internet Use? A Bangladeshi Study," <em>Psychology Research and Behavior Management</em>, 14, pp. 1127–1138. Available at: <a href="https://doi.org/10.2147/PRBM.S323570" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">https://doi.org/10.2147/PRBM.S323570</a>.
+              </p>
+              <p className="pl-8 -indent-8">
+                Mechkova, V. et al. (2025) "Measuring online political activity: introducing the digital society project dataset," <em>Journal of Information Technology & Politics</em>, 22(3), pp. 279–295. Available at: <a href="https://doi.org/10.1080/19331681.2024.2350495" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">https://doi.org/10.1080/19331681.2024.2350495</a>.
+              </p>
+              <p className="pl-8 -indent-8">
+                The V-Dem Dataset (2025). Available at: <a href="https://www.v-dem.net/data/the-v-dem-dataset/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">https://www.v-dem.net/data/the-v-dem-dataset/</a> (Accessed: February 4, 2026).
+              </p>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
     </Layout>
   );
 }
